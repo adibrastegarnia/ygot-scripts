@@ -2,9 +2,9 @@
 // representation of a YANG schema.
 //
 // Input schema modules:
-//  - ../yang/ietf-network-topology.yang
+//  - ./yang/ietf-network-topology.yang
 // Include paths:
-//   - ../yang/...
+//   - yang/...
 syntax = "proto3";
 
 package topology.ietf_network.networks.network.link;

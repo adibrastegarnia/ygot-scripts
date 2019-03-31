@@ -8,6 +8,19 @@ http_archive(
     strip_prefix = "rules_proto-91cbae9bd71a9c51406014b8b3c931652fb6e660",
 )
 
+# proto_library, cc_proto_library, and java_proto_library rules implicitly
+# depend on @com_google_protobuf for protoc and proto runtimes.
+# This statement defines the @com_google_protobuf repo.
+http_archive(
+    name = "com_google_protobuf",
+    sha256 = "9510dd2afc29e7245e9e884336f848c8a6600a14ae726adb6befdb4f786f0be2",
+    strip_prefix = "protobuf-3.6.1.3",
+    urls = ["https://github.com/protocolbuffers/protobuf/archive/v3.6.1.3.zip"],
+)
+
+
+
+
 load("@build_stack_rules_proto//go:deps.bzl", "go_proto_library")
 
 go_proto_library()
