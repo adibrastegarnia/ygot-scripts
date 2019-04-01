@@ -1,4 +1,30 @@
-load("@build_stack_rules_proto//go:go_proto_library.bzl", "go_proto_library")
+load("@io_bazel_rules_go//proto:def.bzl", "go_proto_library")
+
+go_proto_library(
+    name = "link_go_proto",
+    importpath = "topology/ietf_network/networks/network/link",
+    proto = ":link_proto",
+    visibility = ["//visibility:public"],
+    deps = [
+        "ywrapper_go_proto",
+        "yext_go_proto",
+    ],
+)
+
+go_proto_library(
+    name = "ywrapper_go_proto",
+    importpath = "src/github.com/openconfig/ygot/proto/ywrapper",
+    proto = ":ywrapper_proto",
+    visibility = ["//visibility:public"],
+)
+
+go_proto_library(
+    name = "yext_go_proto",
+    importpath = "src/github.com/openconfig/ygot/proto/yext",
+    proto = ":yext_proto",
+    visibility = ["//visibility:public"],
+)
+
 
 
 proto_library (
@@ -10,6 +36,7 @@ proto_library (
         ":yext_proto",
     ],
 )
+
 
 
 proto_library(
