@@ -7,6 +7,10 @@ $ cd ygot-scripts/src
 $ go generate
 ```
 
+The protobuf will be generated under *models/proto/topology* directory. 
+
+**Note**: The protobuf models from from RFC 8345 YANG files have been generated already. 
+
 # Generate Go code from .proto files
 
 1. First install lates version of bazel using the instrcutions that have been posted here: [Installing Bazel] (https://docs.bazel.build/versions/master/install.html)
