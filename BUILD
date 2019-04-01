@@ -26,7 +26,6 @@ go_proto_library(
 )
 
 
-
 proto_library (
     name = "link_proto",
     srcs = ["src/models/proto/topology/ietf_network/networks/network/link/link.proto"],
