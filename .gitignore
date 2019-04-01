@@ -12,3 +12,6 @@
 *.out
 
 bazel-*
+*.org
+*.com
+
