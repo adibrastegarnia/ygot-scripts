@@ -7,12 +7,13 @@ $ cd ygot-scripts/src
 $ go generate
 ```
 
-# Generates Go code from .proto files
+# Generate Go code from .proto files
 
-1. First install lates version of bazel using the instrcutions that have been posted here: [[https://docs.bazel.build/versions/master/install.html]]
+1. First install lates version of bazel using the instrcutions that have been posted here: [https://docs.bazel.build/versions/master/install.html] (Installing Bazel)
 
 2. Run the following command to generate Go code from .proto files:
+
 ```console
-cd ygot-scripts/src
-bazel build //...
+$ cd ygot-scripts/src
+$ bazel build //...
 ```
