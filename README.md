@@ -13,7 +13,7 @@ The protobuf will be generated under *models/proto/topology* directory.
 
 # Generate Go code from .proto files
 
-1. First install lates version of bazel using the instrcutions that have been posted here: [Installing Bazel] (https://docs.bazel.build/versions/master/install.html)
+1. First install lates version of bazel using the instrcutions that have been posted here: [Installing Bazel](https://docs.bazel.build/versions/master/install.html)
 
 2. Run the following command to generate Go code from .proto files:
 
