@@ -6,9 +6,9 @@ load("@io_bazel_rules_go//proto:def.bzl", "go_proto_library")
 
 # topology go proto library
 go_proto_library(
-    name = "topology_go_proto",
-    importpath = "topology",
-    proto = ":topology_proto",
+    name = "topo_go_proto",
+    importpath = "topo",
+    proto = ":topo_proto",
     visibility = ["//visibility:public"],
     deps = [
         "ietf_network_go_proto",
@@ -20,7 +20,7 @@ go_proto_library(
 # ietf_network go proto library
 go_proto_library(
     name = "ietf_network_go_proto",
-    importpath = "topology/ietf_network",
+    importpath = "topo/ietf_network",
     proto = ":ietf_network_proto",
     visibility = ["//visibility:public"],
     deps = [
@@ -33,7 +33,7 @@ go_proto_library(
 # networks go proto library 
 go_proto_library(
     name = "networks_go_proto",
-    importpath = "topology/ietf_network/networks",
+    importpath = "topo/ietf_network/networks",
     proto = ":networks_proto",
     visibility = ["//visibility:public"],
     deps = [
@@ -46,7 +46,7 @@ go_proto_library(
 # network go proto library
 go_proto_library(
     name = "network_go_proto",
-    importpath = "topology/ietf_network/networks/network",
+    importpath = "topo/ietf_network/networks/network",
     proto = ":network_proto",
     visibility = ["//visibility:public"],
     deps = [
@@ -60,7 +60,7 @@ go_proto_library(
 # link go proto library 
 go_proto_library(
     name = "link_go_proto",
-    importpath = "topology/ietf_network/networks/network/link",
+    importpath = "topo/ietf_network/networks/network/link",
     proto = ":link_proto",
     visibility = ["//visibility:public"],
     deps = [
@@ -71,7 +71,7 @@ go_proto_library(
 # node go proto library
 go_proto_library(
     name = "node_go_proto",
-    importpath = "topology/ietf_network/networks/network/node",
+    importpath = "topo/ietf_network/networks/network/node",
     proto = ":node_proto",
     visibility = ["//visibility:public"],
     deps = [
@@ -84,7 +84,7 @@ go_proto_library(
 # termination point go proto library
 go_proto_library(
     name = "termination_point_go_proto",
-    importpath = "topology/ietf_network/networks/network/node/termination_point",
+    importpath = "topo/ietf_network/networks/network/node/termination_point",
     proto = ":termination_point_proto",
     visibility = ["//visibility:public"],
     deps = [
@@ -114,8 +114,8 @@ go_proto_library(
 
 # topology proto 
 proto_library (
-    name = "topology_proto",
-    srcs = ["models/proto/topology/topology.proto"],
+    name = "topo_proto",
+    srcs = ["models/proto/topo/topo.proto"],
     deps = [
         "@com_google_protobuf//:any_proto",
         ":ietf_network_proto",
@@ -128,7 +128,7 @@ proto_library (
 # ietf_network proto
 proto_library (
     name = "ietf_network_proto",
-    srcs = ["models/proto/topology/ietf_network/ietf_network.proto"],
+    srcs = ["models/proto/topo/ietf_network/ietf_network.proto"],
     deps = [
         "@com_google_protobuf//:any_proto",
         ":networks_proto",
@@ -141,7 +141,7 @@ proto_library (
 # networks proto 
 proto_library (
     name = "networks_proto",
-    srcs = ["models/proto/topology/ietf_network/networks/networks.proto"],
+    srcs = ["models/proto/topo/ietf_network/networks/networks.proto"],
     deps = [
         "@com_google_protobuf//:any_proto",
         ":network_proto",
@@ -153,7 +153,7 @@ proto_library (
 # network proto 
 proto_library (
     name = "network_proto",
-    srcs = ["models/proto/topology/ietf_network/networks/network/network.proto"],
+    srcs = ["models/proto/topo/ietf_network/networks/network/network.proto"],
     deps = [
         "@com_google_protobuf//:any_proto",
         ":link_proto",
@@ -166,7 +166,7 @@ proto_library (
 # link proto
 proto_library (
     name = "link_proto",
-    srcs = ["models/proto/topology/ietf_network/networks/network/link/link.proto"],
+    srcs = ["models/proto/topo/ietf_network/networks/network/link/link.proto"],
     deps = [
         "@com_google_protobuf//:any_proto",
         ":ywrapper_proto",
@@ -177,7 +177,7 @@ proto_library (
 # node proto
 proto_library (
     name = "node_proto",
-    srcs = ["models/proto/topology/ietf_network/networks/network/node/node.proto"],
+    srcs = ["models/proto/topo/ietf_network/networks/network/node/node.proto"],
     deps = [
         "@com_google_protobuf//:any_proto",
         ":termination_point_proto",
@@ -189,7 +189,7 @@ proto_library (
 # termination_point proto
 proto_library (
     name = "termination_point_proto",
-    srcs = ["models/proto/topology/ietf_network/networks/network/node/termination_point/termination_point.proto"],
+    srcs = ["models/proto/topo/ietf_network/networks/network/node/termination_point/termination_point.proto"],
     deps = [
         "@com_google_protobuf//:any_proto",
         ":ywrapper_proto",
