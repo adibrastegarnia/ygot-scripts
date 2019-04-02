@@ -21,6 +21,7 @@ import (
 	"github.com/openconfig/ygot/ygot"
 	"github.com/openconfig/goyang/pkg/yang"
 	"github.com/openconfig/ygot/ytypes"
+	gpb "github.com/openconfig/gnmi/proto/gnmi"
 )
 
 // Binary is a type that is used for fields that have a YANG type of
@@ -88,6 +89,22 @@ func Unmarshal(data []byte, destStruct ygot.GoStruct, opts ...ytypes.UnmarshalOp
 	}
 	return ytypes.Unmarshal(schema, destStruct, jsonTree, opts...)
 }
+// ΓModelData contains the catalogue information corresponding to the modules for
+// which Go code was generated.
+var ΓModelData = []*gpb.ModelData{
+    {
+		Name: "ietf-inet-types",
+		Organization: "IETF NETMOD (NETCONF Data Modeling Language) Working Group",
+	},
+    {
+		Name: "ietf-network",
+		Organization: "IETF I2RS (Interface to the Routing System) Working Group",
+	},
+    {
+		Name: "ietf-network-topology",
+		Organization: "IETF I2RS (Interface to the Routing System) Working Group",
+	},
+}
 
 // IETFNetwork_Networks represents the /ietf-network/networks YANG schema element.
 type IETFNetwork_Networks struct {
@@ -124,6 +141,73 @@ func (t *IETFNetwork_Networks) NewNetwork(NetworkId string) (*IETFNetwork_Networ
 	}
 
 	return t.Network[key], nil
+}
+
+// GetOrCreateNetwork retrieves the value with the specified keys from
+// the receiver IETFNetwork_Networks. If the entry does not exist, then it is created.
+// It returns the existing or new list member.
+func (t *IETFNetwork_Networks) GetOrCreateNetwork(NetworkId string) (*IETFNetwork_Networks_Network){
+
+	key := NetworkId
+
+	if v, ok := t.Network[key]; ok {
+		return v
+	}
+	// Panic if we receive an error, since we should have retrieved an existing
+	// list member. This allows chaining of GetOrCreate methods.
+	v, err := t.NewNetwork(NetworkId)
+	if err != nil {
+		panic(fmt.Sprintf("GetOrCreateNetwork got unexpected error: %v", err))
+	}
+	return v
+}
+
+// GetNetwork retrieves the value with the specified key from
+// the Network map field of IETFNetwork_Networks. If the receiver is nil, or
+// the specified key is not present in the list, nil is returned such that Get*
+// methods may be safely chained.
+func (t *IETFNetwork_Networks) GetNetwork(NetworkId string) (*IETFNetwork_Networks_Network){
+
+	if t == nil {
+		return nil
+	}
+
+  key := NetworkId
+
+  if lm, ok := t.Network[key]; ok {
+    return lm
+  }
+  return nil
+}
+
+// DeleteNetwork deletes the value with the specified keys from
+// the receiver IETFNetwork_Networks. If there is no such element, the function
+// is a no-op.
+func (t *IETFNetwork_Networks) DeleteNetwork(NetworkId string) {
+	key := NetworkId
+
+	delete(t.Network, key)
+}
+
+// AppendNetwork appends the supplied IETFNetwork_Networks_Network struct to the
+// list Network of IETFNetwork_Networks. If the key value(s) specified in
+// the supplied IETFNetwork_Networks_Network already exist in the list, an error is
+// returned.
+func (t *IETFNetwork_Networks) AppendNetwork(v *IETFNetwork_Networks_Network) error {
+	key := *v.NetworkId
+
+	// Initialise the list within the receiver struct if it has not already been
+	// created.
+	if t.Network == nil {
+		t.Network = make(map[string]*IETFNetwork_Networks_Network)
+	}
+
+	if _, ok := t.Network[key]; ok {
+		return fmt.Errorf("duplicate key for list Network %v", key)
+	}
+
+	t.Network[key] = v
+	return nil
 }
 
 // Validate validates s against the YANG schema corresponding to its type.
@@ -180,6 +264,73 @@ func (t *IETFNetwork_Networks_Network) NewLink(LinkId string) (*IETFNetwork_Netw
 	return t.Link[key], nil
 }
 
+// GetOrCreateLink retrieves the value with the specified keys from
+// the receiver IETFNetwork_Networks_Network. If the entry does not exist, then it is created.
+// It returns the existing or new list member.
+func (t *IETFNetwork_Networks_Network) GetOrCreateLink(LinkId string) (*IETFNetwork_Networks_Network_Link){
+
+	key := LinkId
+
+	if v, ok := t.Link[key]; ok {
+		return v
+	}
+	// Panic if we receive an error, since we should have retrieved an existing
+	// list member. This allows chaining of GetOrCreate methods.
+	v, err := t.NewLink(LinkId)
+	if err != nil {
+		panic(fmt.Sprintf("GetOrCreateLink got unexpected error: %v", err))
+	}
+	return v
+}
+
+// GetLink retrieves the value with the specified key from
+// the Link map field of IETFNetwork_Networks_Network. If the receiver is nil, or
+// the specified key is not present in the list, nil is returned such that Get*
+// methods may be safely chained.
+func (t *IETFNetwork_Networks_Network) GetLink(LinkId string) (*IETFNetwork_Networks_Network_Link){
+
+	if t == nil {
+		return nil
+	}
+
+  key := LinkId
+
+  if lm, ok := t.Link[key]; ok {
+    return lm
+  }
+  return nil
+}
+
+// DeleteLink deletes the value with the specified keys from
+// the receiver IETFNetwork_Networks_Network. If there is no such element, the function
+// is a no-op.
+func (t *IETFNetwork_Networks_Network) DeleteLink(LinkId string) {
+	key := LinkId
+
+	delete(t.Link, key)
+}
+
+// AppendLink appends the supplied IETFNetwork_Networks_Network_Link struct to the
+// list Link of IETFNetwork_Networks_Network. If the key value(s) specified in
+// the supplied IETFNetwork_Networks_Network_Link already exist in the list, an error is
+// returned.
+func (t *IETFNetwork_Networks_Network) AppendLink(v *IETFNetwork_Networks_Network_Link) error {
+	key := *v.LinkId
+
+	// Initialise the list within the receiver struct if it has not already been
+	// created.
+	if t.Link == nil {
+		t.Link = make(map[string]*IETFNetwork_Networks_Network_Link)
+	}
+
+	if _, ok := t.Link[key]; ok {
+		return fmt.Errorf("duplicate key for list Link %v", key)
+	}
+
+	t.Link[key] = v
+	return nil
+}
+
 // NewNode creates a new entry in the Node list of the
 // IETFNetwork_Networks_Network struct. The keys of the list are populated from the input
 // arguments.
@@ -207,6 +358,73 @@ func (t *IETFNetwork_Networks_Network) NewNode(NodeId string) (*IETFNetwork_Netw
 	return t.Node[key], nil
 }
 
+// GetOrCreateNode retrieves the value with the specified keys from
+// the receiver IETFNetwork_Networks_Network. If the entry does not exist, then it is created.
+// It returns the existing or new list member.
+func (t *IETFNetwork_Networks_Network) GetOrCreateNode(NodeId string) (*IETFNetwork_Networks_Network_Node){
+
+	key := NodeId
+
+	if v, ok := t.Node[key]; ok {
+		return v
+	}
+	// Panic if we receive an error, since we should have retrieved an existing
+	// list member. This allows chaining of GetOrCreate methods.
+	v, err := t.NewNode(NodeId)
+	if err != nil {
+		panic(fmt.Sprintf("GetOrCreateNode got unexpected error: %v", err))
+	}
+	return v
+}
+
+// GetNode retrieves the value with the specified key from
+// the Node map field of IETFNetwork_Networks_Network. If the receiver is nil, or
+// the specified key is not present in the list, nil is returned such that Get*
+// methods may be safely chained.
+func (t *IETFNetwork_Networks_Network) GetNode(NodeId string) (*IETFNetwork_Networks_Network_Node){
+
+	if t == nil {
+		return nil
+	}
+
+  key := NodeId
+
+  if lm, ok := t.Node[key]; ok {
+    return lm
+  }
+  return nil
+}
+
+// DeleteNode deletes the value with the specified keys from
+// the receiver IETFNetwork_Networks_Network. If there is no such element, the function
+// is a no-op.
+func (t *IETFNetwork_Networks_Network) DeleteNode(NodeId string) {
+	key := NodeId
+
+	delete(t.Node, key)
+}
+
+// AppendNode appends the supplied IETFNetwork_Networks_Network_Node struct to the
+// list Node of IETFNetwork_Networks_Network. If the key value(s) specified in
+// the supplied IETFNetwork_Networks_Network_Node already exist in the list, an error is
+// returned.
+func (t *IETFNetwork_Networks_Network) AppendNode(v *IETFNetwork_Networks_Network_Node) error {
+	key := *v.NodeId
+
+	// Initialise the list within the receiver struct if it has not already been
+	// created.
+	if t.Node == nil {
+		t.Node = make(map[string]*IETFNetwork_Networks_Network_Node)
+	}
+
+	if _, ok := t.Node[key]; ok {
+		return fmt.Errorf("duplicate key for list Node %v", key)
+	}
+
+	t.Node[key] = v
+	return nil
+}
+
 // NewSupportingNetwork creates a new entry in the SupportingNetwork list of the
 // IETFNetwork_Networks_Network struct. The keys of the list are populated from the input
 // arguments.
@@ -232,6 +450,107 @@ func (t *IETFNetwork_Networks_Network) NewSupportingNetwork(NetworkRef string) (
 	}
 
 	return t.SupportingNetwork[key], nil
+}
+
+// GetOrCreateSupportingNetwork retrieves the value with the specified keys from
+// the receiver IETFNetwork_Networks_Network. If the entry does not exist, then it is created.
+// It returns the existing or new list member.
+func (t *IETFNetwork_Networks_Network) GetOrCreateSupportingNetwork(NetworkRef string) (*IETFNetwork_Networks_Network_SupportingNetwork){
+
+	key := NetworkRef
+
+	if v, ok := t.SupportingNetwork[key]; ok {
+		return v
+	}
+	// Panic if we receive an error, since we should have retrieved an existing
+	// list member. This allows chaining of GetOrCreate methods.
+	v, err := t.NewSupportingNetwork(NetworkRef)
+	if err != nil {
+		panic(fmt.Sprintf("GetOrCreateSupportingNetwork got unexpected error: %v", err))
+	}
+	return v
+}
+
+// GetSupportingNetwork retrieves the value with the specified key from
+// the SupportingNetwork map field of IETFNetwork_Networks_Network. If the receiver is nil, or
+// the specified key is not present in the list, nil is returned such that Get*
+// methods may be safely chained.
+func (t *IETFNetwork_Networks_Network) GetSupportingNetwork(NetworkRef string) (*IETFNetwork_Networks_Network_SupportingNetwork){
+
+	if t == nil {
+		return nil
+	}
+
+  key := NetworkRef
+
+  if lm, ok := t.SupportingNetwork[key]; ok {
+    return lm
+  }
+  return nil
+}
+
+// DeleteSupportingNetwork deletes the value with the specified keys from
+// the receiver IETFNetwork_Networks_Network. If there is no such element, the function
+// is a no-op.
+func (t *IETFNetwork_Networks_Network) DeleteSupportingNetwork(NetworkRef string) {
+	key := NetworkRef
+
+	delete(t.SupportingNetwork, key)
+}
+
+// AppendSupportingNetwork appends the supplied IETFNetwork_Networks_Network_SupportingNetwork struct to the
+// list SupportingNetwork of IETFNetwork_Networks_Network. If the key value(s) specified in
+// the supplied IETFNetwork_Networks_Network_SupportingNetwork already exist in the list, an error is
+// returned.
+func (t *IETFNetwork_Networks_Network) AppendSupportingNetwork(v *IETFNetwork_Networks_Network_SupportingNetwork) error {
+	key := *v.NetworkRef
+
+	// Initialise the list within the receiver struct if it has not already been
+	// created.
+	if t.SupportingNetwork == nil {
+		t.SupportingNetwork = make(map[string]*IETFNetwork_Networks_Network_SupportingNetwork)
+	}
+
+	if _, ok := t.SupportingNetwork[key]; ok {
+		return fmt.Errorf("duplicate key for list SupportingNetwork %v", key)
+	}
+
+	t.SupportingNetwork[key] = v
+	return nil
+}
+
+// GetOrCreateNetworkTypes retrieves the value of the NetworkTypes field
+// or returns the existing field if it already exists.
+func (t *IETFNetwork_Networks_Network) GetOrCreateNetworkTypes() *IETFNetwork_Networks_Network_NetworkTypes {
+	if t.NetworkTypes != nil {
+		return t.NetworkTypes
+	}
+	t.NetworkTypes = &IETFNetwork_Networks_Network_NetworkTypes{}
+	return t.NetworkTypes
+}
+
+// GetNetworkTypes returns the value of the NetworkTypes struct pointer
+// from IETFNetwork_Networks_Network. If the receiver or the field NetworkTypes is nil, nil
+// is returned such that the Get* methods can be safely chained.
+func (t *IETFNetwork_Networks_Network) GetNetworkTypes() *IETFNetwork_Networks_Network_NetworkTypes {
+	if t != nil && t.NetworkTypes != nil {
+		return t.NetworkTypes
+	}
+	return nil
+}
+
+// GetNetworkId retrieves the value of the leaf NetworkId from the IETFNetwork_Networks_Network
+// struct. Caution should be exercised whilst using this method since it will return
+// the Go zero value if the field is explicitly unset. If the caller explicitly does
+// not care if NetworkId is set, it can safely use t.GetNetworkId()
+// to retrieve the value. In the case that the caller has different actions based on
+// whether the leaf is set or unset, it should use 'if t.NetworkId == nil'
+// before retrieving the leaf's value.
+func (t *IETFNetwork_Networks_Network) GetNetworkId() string {
+	if t == nil || t.NetworkId == nil {
+		return ""
+	}
+	return *t.NetworkId
 }
 
 // ΛListKeyMap returns the keys of the IETFNetwork_Networks_Network struct, which is a YANG list entry.
@@ -308,6 +627,137 @@ func (t *IETFNetwork_Networks_Network_Link) NewSupportingLink(NetworkRef string,
 	return t.SupportingLink[key], nil
 }
 
+// GetOrCreateSupportingLink retrieves the value with the specified keys from
+// the receiver IETFNetwork_Networks_Network_Link. If the entry does not exist, then it is created.
+// It returns the existing or new list member.
+func (t *IETFNetwork_Networks_Network_Link) GetOrCreateSupportingLink(NetworkRef string, LinkRef string) (*IETFNetwork_Networks_Network_Link_SupportingLink){
+
+	key := IETFNetwork_Networks_Network_Link_SupportingLink_Key{
+		NetworkRef: NetworkRef,
+		LinkRef: LinkRef,
+	}
+
+	if v, ok := t.SupportingLink[key]; ok {
+		return v
+	}
+	// Panic if we receive an error, since we should have retrieved an existing
+	// list member. This allows chaining of GetOrCreate methods.
+	v, err := t.NewSupportingLink(NetworkRef, LinkRef)
+	if err != nil {
+		panic(fmt.Sprintf("GetOrCreateSupportingLink got unexpected error: %v", err))
+	}
+	return v
+}
+
+// GetSupportingLink retrieves the value with the specified key from
+// the SupportingLink map field of IETFNetwork_Networks_Network_Link. If the receiver is nil, or
+// the specified key is not present in the list, nil is returned such that Get*
+// methods may be safely chained.
+func (t *IETFNetwork_Networks_Network_Link) GetSupportingLink(NetworkRef string, LinkRef string) (*IETFNetwork_Networks_Network_Link_SupportingLink){
+
+	if t == nil {
+		return nil
+	}
+
+  key := IETFNetwork_Networks_Network_Link_SupportingLink_Key{
+		NetworkRef: NetworkRef,
+		LinkRef: LinkRef,
+	}
+
+  if lm, ok := t.SupportingLink[key]; ok {
+    return lm
+  }
+  return nil
+}
+
+// DeleteSupportingLink deletes the value with the specified keys from
+// the receiver IETFNetwork_Networks_Network_Link. If there is no such element, the function
+// is a no-op.
+func (t *IETFNetwork_Networks_Network_Link) DeleteSupportingLink(NetworkRef string, LinkRef string) {
+	key := IETFNetwork_Networks_Network_Link_SupportingLink_Key{
+		NetworkRef: NetworkRef,
+		LinkRef: LinkRef,
+	}
+
+	delete(t.SupportingLink, key)
+}
+
+// AppendSupportingLink appends the supplied IETFNetwork_Networks_Network_Link_SupportingLink struct to the
+// list SupportingLink of IETFNetwork_Networks_Network_Link. If the key value(s) specified in
+// the supplied IETFNetwork_Networks_Network_Link_SupportingLink already exist in the list, an error is
+// returned.
+func (t *IETFNetwork_Networks_Network_Link) AppendSupportingLink(v *IETFNetwork_Networks_Network_Link_SupportingLink) error {
+	key := IETFNetwork_Networks_Network_Link_SupportingLink_Key{NetworkRef: *v.NetworkRef,LinkRef: *v.LinkRef,
+	}
+
+	// Initialise the list within the receiver struct if it has not already been
+	// created.
+	if t.SupportingLink == nil {
+		t.SupportingLink = make(map[IETFNetwork_Networks_Network_Link_SupportingLink_Key]*IETFNetwork_Networks_Network_Link_SupportingLink)
+	}
+
+	if _, ok := t.SupportingLink[key]; ok {
+		return fmt.Errorf("duplicate key for list SupportingLink %v", key)
+	}
+
+	t.SupportingLink[key] = v
+	return nil
+}
+
+// GetOrCreateDestination retrieves the value of the Destination field
+// or returns the existing field if it already exists.
+func (t *IETFNetwork_Networks_Network_Link) GetOrCreateDestination() *IETFNetwork_Networks_Network_Link_Destination {
+	if t.Destination != nil {
+		return t.Destination
+	}
+	t.Destination = &IETFNetwork_Networks_Network_Link_Destination{}
+	return t.Destination
+}
+
+// GetOrCreateSource retrieves the value of the Source field
+// or returns the existing field if it already exists.
+func (t *IETFNetwork_Networks_Network_Link) GetOrCreateSource() *IETFNetwork_Networks_Network_Link_Source {
+	if t.Source != nil {
+		return t.Source
+	}
+	t.Source = &IETFNetwork_Networks_Network_Link_Source{}
+	return t.Source
+}
+
+// GetDestination returns the value of the Destination struct pointer
+// from IETFNetwork_Networks_Network_Link. If the receiver or the field Destination is nil, nil
+// is returned such that the Get* methods can be safely chained.
+func (t *IETFNetwork_Networks_Network_Link) GetDestination() *IETFNetwork_Networks_Network_Link_Destination {
+	if t != nil && t.Destination != nil {
+		return t.Destination
+	}
+	return nil
+}
+
+// GetSource returns the value of the Source struct pointer
+// from IETFNetwork_Networks_Network_Link. If the receiver or the field Source is nil, nil
+// is returned such that the Get* methods can be safely chained.
+func (t *IETFNetwork_Networks_Network_Link) GetSource() *IETFNetwork_Networks_Network_Link_Source {
+	if t != nil && t.Source != nil {
+		return t.Source
+	}
+	return nil
+}
+
+// GetLinkId retrieves the value of the leaf LinkId from the IETFNetwork_Networks_Network_Link
+// struct. Caution should be exercised whilst using this method since it will return
+// the Go zero value if the field is explicitly unset. If the caller explicitly does
+// not care if LinkId is set, it can safely use t.GetLinkId()
+// to retrieve the value. In the case that the caller has different actions based on
+// whether the leaf is set or unset, it should use 'if t.LinkId == nil'
+// before retrieving the leaf's value.
+func (t *IETFNetwork_Networks_Network_Link) GetLinkId() string {
+	if t == nil || t.LinkId == nil {
+		return ""
+	}
+	return *t.LinkId
+}
+
 // ΛListKeyMap returns the keys of the IETFNetwork_Networks_Network_Link struct, which is a YANG list entry.
 func (t *IETFNetwork_Networks_Network_Link) ΛListKeyMap() (map[string]interface{}, error) {
 	if t.LinkId == nil {
@@ -343,6 +793,34 @@ type IETFNetwork_Networks_Network_Link_Destination struct {
 // identify it as being generated by ygen.
 func (*IETFNetwork_Networks_Network_Link_Destination) IsYANGGoStruct() {}
 
+// GetDestNode retrieves the value of the leaf DestNode from the IETFNetwork_Networks_Network_Link_Destination
+// struct. Caution should be exercised whilst using this method since it will return
+// the Go zero value if the field is explicitly unset. If the caller explicitly does
+// not care if DestNode is set, it can safely use t.GetDestNode()
+// to retrieve the value. In the case that the caller has different actions based on
+// whether the leaf is set or unset, it should use 'if t.DestNode == nil'
+// before retrieving the leaf's value.
+func (t *IETFNetwork_Networks_Network_Link_Destination) GetDestNode() string {
+	if t == nil || t.DestNode == nil {
+		return ""
+	}
+	return *t.DestNode
+}
+
+// GetDestTp retrieves the value of the leaf DestTp from the IETFNetwork_Networks_Network_Link_Destination
+// struct. Caution should be exercised whilst using this method since it will return
+// the Go zero value if the field is explicitly unset. If the caller explicitly does
+// not care if DestTp is set, it can safely use t.GetDestTp()
+// to retrieve the value. In the case that the caller has different actions based on
+// whether the leaf is set or unset, it should use 'if t.DestTp == nil'
+// before retrieving the leaf's value.
+func (t *IETFNetwork_Networks_Network_Link_Destination) GetDestTp() string {
+	if t == nil || t.DestTp == nil {
+		return ""
+	}
+	return *t.DestTp
+}
+
 // Validate validates s against the YANG schema corresponding to its type.
 func (t *IETFNetwork_Networks_Network_Link_Destination) Validate(opts ...ygot.ValidationOption) error {
 	if err := ytypes.Validate(SchemaTree["IETFNetwork_Networks_Network_Link_Destination"], t, opts...); err != nil {
@@ -367,6 +845,34 @@ type IETFNetwork_Networks_Network_Link_Source struct {
 // identify it as being generated by ygen.
 func (*IETFNetwork_Networks_Network_Link_Source) IsYANGGoStruct() {}
 
+// GetSourceNode retrieves the value of the leaf SourceNode from the IETFNetwork_Networks_Network_Link_Source
+// struct. Caution should be exercised whilst using this method since it will return
+// the Go zero value if the field is explicitly unset. If the caller explicitly does
+// not care if SourceNode is set, it can safely use t.GetSourceNode()
+// to retrieve the value. In the case that the caller has different actions based on
+// whether the leaf is set or unset, it should use 'if t.SourceNode == nil'
+// before retrieving the leaf's value.
+func (t *IETFNetwork_Networks_Network_Link_Source) GetSourceNode() string {
+	if t == nil || t.SourceNode == nil {
+		return ""
+	}
+	return *t.SourceNode
+}
+
+// GetSourceTp retrieves the value of the leaf SourceTp from the IETFNetwork_Networks_Network_Link_Source
+// struct. Caution should be exercised whilst using this method since it will return
+// the Go zero value if the field is explicitly unset. If the caller explicitly does
+// not care if SourceTp is set, it can safely use t.GetSourceTp()
+// to retrieve the value. In the case that the caller has different actions based on
+// whether the leaf is set or unset, it should use 'if t.SourceTp == nil'
+// before retrieving the leaf's value.
+func (t *IETFNetwork_Networks_Network_Link_Source) GetSourceTp() string {
+	if t == nil || t.SourceTp == nil {
+		return ""
+	}
+	return *t.SourceTp
+}
+
 // Validate validates s against the YANG schema corresponding to its type.
 func (t *IETFNetwork_Networks_Network_Link_Source) Validate(opts ...ygot.ValidationOption) error {
 	if err := ytypes.Validate(SchemaTree["IETFNetwork_Networks_Network_Link_Source"], t, opts...); err != nil {
@@ -390,6 +896,34 @@ type IETFNetwork_Networks_Network_Link_SupportingLink struct {
 // interface. This allows functions that need to handle this struct to
 // identify it as being generated by ygen.
 func (*IETFNetwork_Networks_Network_Link_SupportingLink) IsYANGGoStruct() {}
+
+// GetLinkRef retrieves the value of the leaf LinkRef from the IETFNetwork_Networks_Network_Link_SupportingLink
+// struct. Caution should be exercised whilst using this method since it will return
+// the Go zero value if the field is explicitly unset. If the caller explicitly does
+// not care if LinkRef is set, it can safely use t.GetLinkRef()
+// to retrieve the value. In the case that the caller has different actions based on
+// whether the leaf is set or unset, it should use 'if t.LinkRef == nil'
+// before retrieving the leaf's value.
+func (t *IETFNetwork_Networks_Network_Link_SupportingLink) GetLinkRef() string {
+	if t == nil || t.LinkRef == nil {
+		return ""
+	}
+	return *t.LinkRef
+}
+
+// GetNetworkRef retrieves the value of the leaf NetworkRef from the IETFNetwork_Networks_Network_Link_SupportingLink
+// struct. Caution should be exercised whilst using this method since it will return
+// the Go zero value if the field is explicitly unset. If the caller explicitly does
+// not care if NetworkRef is set, it can safely use t.GetNetworkRef()
+// to retrieve the value. In the case that the caller has different actions based on
+// whether the leaf is set or unset, it should use 'if t.NetworkRef == nil'
+// before retrieving the leaf's value.
+func (t *IETFNetwork_Networks_Network_Link_SupportingLink) GetNetworkRef() string {
+	if t == nil || t.NetworkRef == nil {
+		return ""
+	}
+	return *t.NetworkRef
+}
 
 // ΛListKeyMap returns the keys of the IETFNetwork_Networks_Network_Link_SupportingLink struct, which is a YANG list entry.
 func (t *IETFNetwork_Networks_Network_Link_SupportingLink) ΛListKeyMap() (map[string]interface{}, error) {
@@ -491,6 +1025,83 @@ func (t *IETFNetwork_Networks_Network_Node) NewSupportingNode(NetworkRef string,
 	return t.SupportingNode[key], nil
 }
 
+// GetOrCreateSupportingNode retrieves the value with the specified keys from
+// the receiver IETFNetwork_Networks_Network_Node. If the entry does not exist, then it is created.
+// It returns the existing or new list member.
+func (t *IETFNetwork_Networks_Network_Node) GetOrCreateSupportingNode(NetworkRef string, NodeRef string) (*IETFNetwork_Networks_Network_Node_SupportingNode){
+
+	key := IETFNetwork_Networks_Network_Node_SupportingNode_Key{
+		NetworkRef: NetworkRef,
+		NodeRef: NodeRef,
+	}
+
+	if v, ok := t.SupportingNode[key]; ok {
+		return v
+	}
+	// Panic if we receive an error, since we should have retrieved an existing
+	// list member. This allows chaining of GetOrCreate methods.
+	v, err := t.NewSupportingNode(NetworkRef, NodeRef)
+	if err != nil {
+		panic(fmt.Sprintf("GetOrCreateSupportingNode got unexpected error: %v", err))
+	}
+	return v
+}
+
+// GetSupportingNode retrieves the value with the specified key from
+// the SupportingNode map field of IETFNetwork_Networks_Network_Node. If the receiver is nil, or
+// the specified key is not present in the list, nil is returned such that Get*
+// methods may be safely chained.
+func (t *IETFNetwork_Networks_Network_Node) GetSupportingNode(NetworkRef string, NodeRef string) (*IETFNetwork_Networks_Network_Node_SupportingNode){
+
+	if t == nil {
+		return nil
+	}
+
+  key := IETFNetwork_Networks_Network_Node_SupportingNode_Key{
+		NetworkRef: NetworkRef,
+		NodeRef: NodeRef,
+	}
+
+  if lm, ok := t.SupportingNode[key]; ok {
+    return lm
+  }
+  return nil
+}
+
+// DeleteSupportingNode deletes the value with the specified keys from
+// the receiver IETFNetwork_Networks_Network_Node. If there is no such element, the function
+// is a no-op.
+func (t *IETFNetwork_Networks_Network_Node) DeleteSupportingNode(NetworkRef string, NodeRef string) {
+	key := IETFNetwork_Networks_Network_Node_SupportingNode_Key{
+		NetworkRef: NetworkRef,
+		NodeRef: NodeRef,
+	}
+
+	delete(t.SupportingNode, key)
+}
+
+// AppendSupportingNode appends the supplied IETFNetwork_Networks_Network_Node_SupportingNode struct to the
+// list SupportingNode of IETFNetwork_Networks_Network_Node. If the key value(s) specified in
+// the supplied IETFNetwork_Networks_Network_Node_SupportingNode already exist in the list, an error is
+// returned.
+func (t *IETFNetwork_Networks_Network_Node) AppendSupportingNode(v *IETFNetwork_Networks_Network_Node_SupportingNode) error {
+	key := IETFNetwork_Networks_Network_Node_SupportingNode_Key{NetworkRef: *v.NetworkRef,NodeRef: *v.NodeRef,
+	}
+
+	// Initialise the list within the receiver struct if it has not already been
+	// created.
+	if t.SupportingNode == nil {
+		t.SupportingNode = make(map[IETFNetwork_Networks_Network_Node_SupportingNode_Key]*IETFNetwork_Networks_Network_Node_SupportingNode)
+	}
+
+	if _, ok := t.SupportingNode[key]; ok {
+		return fmt.Errorf("duplicate key for list SupportingNode %v", key)
+	}
+
+	t.SupportingNode[key] = v
+	return nil
+}
+
 // NewTerminationPoint creates a new entry in the TerminationPoint list of the
 // IETFNetwork_Networks_Network_Node struct. The keys of the list are populated from the input
 // arguments.
@@ -516,6 +1127,87 @@ func (t *IETFNetwork_Networks_Network_Node) NewTerminationPoint(TpId string) (*I
 	}
 
 	return t.TerminationPoint[key], nil
+}
+
+// GetOrCreateTerminationPoint retrieves the value with the specified keys from
+// the receiver IETFNetwork_Networks_Network_Node. If the entry does not exist, then it is created.
+// It returns the existing or new list member.
+func (t *IETFNetwork_Networks_Network_Node) GetOrCreateTerminationPoint(TpId string) (*IETFNetwork_Networks_Network_Node_TerminationPoint){
+
+	key := TpId
+
+	if v, ok := t.TerminationPoint[key]; ok {
+		return v
+	}
+	// Panic if we receive an error, since we should have retrieved an existing
+	// list member. This allows chaining of GetOrCreate methods.
+	v, err := t.NewTerminationPoint(TpId)
+	if err != nil {
+		panic(fmt.Sprintf("GetOrCreateTerminationPoint got unexpected error: %v", err))
+	}
+	return v
+}
+
+// GetTerminationPoint retrieves the value with the specified key from
+// the TerminationPoint map field of IETFNetwork_Networks_Network_Node. If the receiver is nil, or
+// the specified key is not present in the list, nil is returned such that Get*
+// methods may be safely chained.
+func (t *IETFNetwork_Networks_Network_Node) GetTerminationPoint(TpId string) (*IETFNetwork_Networks_Network_Node_TerminationPoint){
+
+	if t == nil {
+		return nil
+	}
+
+  key := TpId
+
+  if lm, ok := t.TerminationPoint[key]; ok {
+    return lm
+  }
+  return nil
+}
+
+// DeleteTerminationPoint deletes the value with the specified keys from
+// the receiver IETFNetwork_Networks_Network_Node. If there is no such element, the function
+// is a no-op.
+func (t *IETFNetwork_Networks_Network_Node) DeleteTerminationPoint(TpId string) {
+	key := TpId
+
+	delete(t.TerminationPoint, key)
+}
+
+// AppendTerminationPoint appends the supplied IETFNetwork_Networks_Network_Node_TerminationPoint struct to the
+// list TerminationPoint of IETFNetwork_Networks_Network_Node. If the key value(s) specified in
+// the supplied IETFNetwork_Networks_Network_Node_TerminationPoint already exist in the list, an error is
+// returned.
+func (t *IETFNetwork_Networks_Network_Node) AppendTerminationPoint(v *IETFNetwork_Networks_Network_Node_TerminationPoint) error {
+	key := *v.TpId
+
+	// Initialise the list within the receiver struct if it has not already been
+	// created.
+	if t.TerminationPoint == nil {
+		t.TerminationPoint = make(map[string]*IETFNetwork_Networks_Network_Node_TerminationPoint)
+	}
+
+	if _, ok := t.TerminationPoint[key]; ok {
+		return fmt.Errorf("duplicate key for list TerminationPoint %v", key)
+	}
+
+	t.TerminationPoint[key] = v
+	return nil
+}
+
+// GetNodeId retrieves the value of the leaf NodeId from the IETFNetwork_Networks_Network_Node
+// struct. Caution should be exercised whilst using this method since it will return
+// the Go zero value if the field is explicitly unset. If the caller explicitly does
+// not care if NodeId is set, it can safely use t.GetNodeId()
+// to retrieve the value. In the case that the caller has different actions based on
+// whether the leaf is set or unset, it should use 'if t.NodeId == nil'
+// before retrieving the leaf's value.
+func (t *IETFNetwork_Networks_Network_Node) GetNodeId() string {
+	if t == nil || t.NodeId == nil {
+		return ""
+	}
+	return *t.NodeId
 }
 
 // ΛListKeyMap returns the keys of the IETFNetwork_Networks_Network_Node struct, which is a YANG list entry.
@@ -552,6 +1244,34 @@ type IETFNetwork_Networks_Network_Node_SupportingNode struct {
 // interface. This allows functions that need to handle this struct to
 // identify it as being generated by ygen.
 func (*IETFNetwork_Networks_Network_Node_SupportingNode) IsYANGGoStruct() {}
+
+// GetNetworkRef retrieves the value of the leaf NetworkRef from the IETFNetwork_Networks_Network_Node_SupportingNode
+// struct. Caution should be exercised whilst using this method since it will return
+// the Go zero value if the field is explicitly unset. If the caller explicitly does
+// not care if NetworkRef is set, it can safely use t.GetNetworkRef()
+// to retrieve the value. In the case that the caller has different actions based on
+// whether the leaf is set or unset, it should use 'if t.NetworkRef == nil'
+// before retrieving the leaf's value.
+func (t *IETFNetwork_Networks_Network_Node_SupportingNode) GetNetworkRef() string {
+	if t == nil || t.NetworkRef == nil {
+		return ""
+	}
+	return *t.NetworkRef
+}
+
+// GetNodeRef retrieves the value of the leaf NodeRef from the IETFNetwork_Networks_Network_Node_SupportingNode
+// struct. Caution should be exercised whilst using this method since it will return
+// the Go zero value if the field is explicitly unset. If the caller explicitly does
+// not care if NodeRef is set, it can safely use t.GetNodeRef()
+// to retrieve the value. In the case that the caller has different actions based on
+// whether the leaf is set or unset, it should use 'if t.NodeRef == nil'
+// before retrieving the leaf's value.
+func (t *IETFNetwork_Networks_Network_Node_SupportingNode) GetNodeRef() string {
+	if t == nil || t.NodeRef == nil {
+		return ""
+	}
+	return *t.NodeRef
+}
 
 // ΛListKeyMap returns the keys of the IETFNetwork_Networks_Network_Node_SupportingNode struct, which is a YANG list entry.
 func (t *IETFNetwork_Networks_Network_Node_SupportingNode) ΛListKeyMap() (map[string]interface{}, error) {
@@ -633,6 +1353,100 @@ func (t *IETFNetwork_Networks_Network_Node_TerminationPoint) NewSupportingTermin
 	return t.SupportingTerminationPoint[key], nil
 }
 
+// GetOrCreateSupportingTerminationPoint retrieves the value with the specified keys from
+// the receiver IETFNetwork_Networks_Network_Node_TerminationPoint. If the entry does not exist, then it is created.
+// It returns the existing or new list member.
+func (t *IETFNetwork_Networks_Network_Node_TerminationPoint) GetOrCreateSupportingTerminationPoint(NetworkRef string, NodeRef string, TpRef string) (*IETFNetwork_Networks_Network_Node_TerminationPoint_SupportingTerminationPoint){
+
+	key := IETFNetwork_Networks_Network_Node_TerminationPoint_SupportingTerminationPoint_Key{
+		NetworkRef: NetworkRef,
+		NodeRef: NodeRef,
+		TpRef: TpRef,
+	}
+
+	if v, ok := t.SupportingTerminationPoint[key]; ok {
+		return v
+	}
+	// Panic if we receive an error, since we should have retrieved an existing
+	// list member. This allows chaining of GetOrCreate methods.
+	v, err := t.NewSupportingTerminationPoint(NetworkRef, NodeRef, TpRef)
+	if err != nil {
+		panic(fmt.Sprintf("GetOrCreateSupportingTerminationPoint got unexpected error: %v", err))
+	}
+	return v
+}
+
+// GetSupportingTerminationPoint retrieves the value with the specified key from
+// the SupportingTerminationPoint map field of IETFNetwork_Networks_Network_Node_TerminationPoint. If the receiver is nil, or
+// the specified key is not present in the list, nil is returned such that Get*
+// methods may be safely chained.
+func (t *IETFNetwork_Networks_Network_Node_TerminationPoint) GetSupportingTerminationPoint(NetworkRef string, NodeRef string, TpRef string) (*IETFNetwork_Networks_Network_Node_TerminationPoint_SupportingTerminationPoint){
+
+	if t == nil {
+		return nil
+	}
+
+  key := IETFNetwork_Networks_Network_Node_TerminationPoint_SupportingTerminationPoint_Key{
+		NetworkRef: NetworkRef,
+		NodeRef: NodeRef,
+		TpRef: TpRef,
+	}
+
+  if lm, ok := t.SupportingTerminationPoint[key]; ok {
+    return lm
+  }
+  return nil
+}
+
+// DeleteSupportingTerminationPoint deletes the value with the specified keys from
+// the receiver IETFNetwork_Networks_Network_Node_TerminationPoint. If there is no such element, the function
+// is a no-op.
+func (t *IETFNetwork_Networks_Network_Node_TerminationPoint) DeleteSupportingTerminationPoint(NetworkRef string, NodeRef string, TpRef string) {
+	key := IETFNetwork_Networks_Network_Node_TerminationPoint_SupportingTerminationPoint_Key{
+		NetworkRef: NetworkRef,
+		NodeRef: NodeRef,
+		TpRef: TpRef,
+	}
+
+	delete(t.SupportingTerminationPoint, key)
+}
+
+// AppendSupportingTerminationPoint appends the supplied IETFNetwork_Networks_Network_Node_TerminationPoint_SupportingTerminationPoint struct to the
+// list SupportingTerminationPoint of IETFNetwork_Networks_Network_Node_TerminationPoint. If the key value(s) specified in
+// the supplied IETFNetwork_Networks_Network_Node_TerminationPoint_SupportingTerminationPoint already exist in the list, an error is
+// returned.
+func (t *IETFNetwork_Networks_Network_Node_TerminationPoint) AppendSupportingTerminationPoint(v *IETFNetwork_Networks_Network_Node_TerminationPoint_SupportingTerminationPoint) error {
+	key := IETFNetwork_Networks_Network_Node_TerminationPoint_SupportingTerminationPoint_Key{NetworkRef: *v.NetworkRef,NodeRef: *v.NodeRef,TpRef: *v.TpRef,
+	}
+
+	// Initialise the list within the receiver struct if it has not already been
+	// created.
+	if t.SupportingTerminationPoint == nil {
+		t.SupportingTerminationPoint = make(map[IETFNetwork_Networks_Network_Node_TerminationPoint_SupportingTerminationPoint_Key]*IETFNetwork_Networks_Network_Node_TerminationPoint_SupportingTerminationPoint)
+	}
+
+	if _, ok := t.SupportingTerminationPoint[key]; ok {
+		return fmt.Errorf("duplicate key for list SupportingTerminationPoint %v", key)
+	}
+
+	t.SupportingTerminationPoint[key] = v
+	return nil
+}
+
+// GetTpId retrieves the value of the leaf TpId from the IETFNetwork_Networks_Network_Node_TerminationPoint
+// struct. Caution should be exercised whilst using this method since it will return
+// the Go zero value if the field is explicitly unset. If the caller explicitly does
+// not care if TpId is set, it can safely use t.GetTpId()
+// to retrieve the value. In the case that the caller has different actions based on
+// whether the leaf is set or unset, it should use 'if t.TpId == nil'
+// before retrieving the leaf's value.
+func (t *IETFNetwork_Networks_Network_Node_TerminationPoint) GetTpId() string {
+	if t == nil || t.TpId == nil {
+		return ""
+	}
+	return *t.TpId
+}
+
 // ΛListKeyMap returns the keys of the IETFNetwork_Networks_Network_Node_TerminationPoint struct, which is a YANG list entry.
 func (t *IETFNetwork_Networks_Network_Node_TerminationPoint) ΛListKeyMap() (map[string]interface{}, error) {
 	if t.TpId == nil {
@@ -668,6 +1482,48 @@ type IETFNetwork_Networks_Network_Node_TerminationPoint_SupportingTerminationPoi
 // interface. This allows functions that need to handle this struct to
 // identify it as being generated by ygen.
 func (*IETFNetwork_Networks_Network_Node_TerminationPoint_SupportingTerminationPoint) IsYANGGoStruct() {}
+
+// GetNetworkRef retrieves the value of the leaf NetworkRef from the IETFNetwork_Networks_Network_Node_TerminationPoint_SupportingTerminationPoint
+// struct. Caution should be exercised whilst using this method since it will return
+// the Go zero value if the field is explicitly unset. If the caller explicitly does
+// not care if NetworkRef is set, it can safely use t.GetNetworkRef()
+// to retrieve the value. In the case that the caller has different actions based on
+// whether the leaf is set or unset, it should use 'if t.NetworkRef == nil'
+// before retrieving the leaf's value.
+func (t *IETFNetwork_Networks_Network_Node_TerminationPoint_SupportingTerminationPoint) GetNetworkRef() string {
+	if t == nil || t.NetworkRef == nil {
+		return ""
+	}
+	return *t.NetworkRef
+}
+
+// GetNodeRef retrieves the value of the leaf NodeRef from the IETFNetwork_Networks_Network_Node_TerminationPoint_SupportingTerminationPoint
+// struct. Caution should be exercised whilst using this method since it will return
+// the Go zero value if the field is explicitly unset. If the caller explicitly does
+// not care if NodeRef is set, it can safely use t.GetNodeRef()
+// to retrieve the value. In the case that the caller has different actions based on
+// whether the leaf is set or unset, it should use 'if t.NodeRef == nil'
+// before retrieving the leaf's value.
+func (t *IETFNetwork_Networks_Network_Node_TerminationPoint_SupportingTerminationPoint) GetNodeRef() string {
+	if t == nil || t.NodeRef == nil {
+		return ""
+	}
+	return *t.NodeRef
+}
+
+// GetTpRef retrieves the value of the leaf TpRef from the IETFNetwork_Networks_Network_Node_TerminationPoint_SupportingTerminationPoint
+// struct. Caution should be exercised whilst using this method since it will return
+// the Go zero value if the field is explicitly unset. If the caller explicitly does
+// not care if TpRef is set, it can safely use t.GetTpRef()
+// to retrieve the value. In the case that the caller has different actions based on
+// whether the leaf is set or unset, it should use 'if t.TpRef == nil'
+// before retrieving the leaf's value.
+func (t *IETFNetwork_Networks_Network_Node_TerminationPoint_SupportingTerminationPoint) GetTpRef() string {
+	if t == nil || t.TpRef == nil {
+		return ""
+	}
+	return *t.TpRef
+}
 
 // ΛListKeyMap returns the keys of the IETFNetwork_Networks_Network_Node_TerminationPoint_SupportingTerminationPoint struct, which is a YANG list entry.
 func (t *IETFNetwork_Networks_Network_Node_TerminationPoint_SupportingTerminationPoint) ΛListKeyMap() (map[string]interface{}, error) {
@@ -713,6 +1569,20 @@ type IETFNetwork_Networks_Network_SupportingNetwork struct {
 // identify it as being generated by ygen.
 func (*IETFNetwork_Networks_Network_SupportingNetwork) IsYANGGoStruct() {}
 
+// GetNetworkRef retrieves the value of the leaf NetworkRef from the IETFNetwork_Networks_Network_SupportingNetwork
+// struct. Caution should be exercised whilst using this method since it will return
+// the Go zero value if the field is explicitly unset. If the caller explicitly does
+// not care if NetworkRef is set, it can safely use t.GetNetworkRef()
+// to retrieve the value. In the case that the caller has different actions based on
+// whether the leaf is set or unset, it should use 'if t.NetworkRef == nil'
+// before retrieving the leaf's value.
+func (t *IETFNetwork_Networks_Network_SupportingNetwork) GetNetworkRef() string {
+	if t == nil || t.NetworkRef == nil {
+		return ""
+	}
+	return *t.NetworkRef
+}
+
 // ΛListKeyMap returns the keys of the IETFNetwork_Networks_Network_SupportingNetwork struct, which is a YANG list entry.
 func (t *IETFNetwork_Networks_Network_SupportingNetwork) ΛListKeyMap() (map[string]interface{}, error) {
 	if t.NetworkRef == nil {
@@ -746,6 +1616,26 @@ type Topology struct {
 // interface. This allows functions that need to handle this struct to
 // identify it as being generated by ygen.
 func (*Topology) IsYANGGoStruct() {}
+
+// GetOrCreateNetworks retrieves the value of the Networks field
+// or returns the existing field if it already exists.
+func (t *Topology) GetOrCreateNetworks() *IETFNetwork_Networks {
+	if t.Networks != nil {
+		return t.Networks
+	}
+	t.Networks = &IETFNetwork_Networks{}
+	return t.Networks
+}
+
+// GetNetworks returns the value of the Networks struct pointer
+// from Topology. If the receiver or the field Networks is nil, nil
+// is returned such that the Get* methods can be safely chained.
+func (t *Topology) GetNetworks() *IETFNetwork_Networks {
+	if t != nil && t.Networks != nil {
+		return t.Networks
+	}
+	return nil
+}
 
 // Validate validates s against the YANG schema corresponding to its type.
 func (t *Topology) Validate(opts ...ygot.ValidationOption) error {
