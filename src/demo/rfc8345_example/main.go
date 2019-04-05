@@ -7,6 +7,7 @@ import (
 	"os"
 
 	"github.com/adibrastegarnia/ygot-scripts/src/pkg/topo"
+	"github.com/openconfig/ygot/ygot"
 )
 
 func readTopoFile() (string, interface{}, interface{}) {
@@ -76,15 +77,14 @@ func createTopo(networkID string, nodes interface{}, links interface{}) topo.IET
 			if key == "source-node" {
 				link := network.GetLink(linkID)
 				src := link.GetOrCreateSource()
-				sourceNode := value.(string)
-				src.SourceNode = &sourceNode
+				src.SourceNode = ygot.String(value.(string))
+
 			}
 
 			if key == "source-tp" {
 				link := network.GetLink(linkID)
 				src := link.GetOrCreateSource()
-				sourceTp := value.(string)
-				src.SourceTp = &sourceTp
+				src.SourceTp = ygot.String(value.(string))
 			}
 
 		}
@@ -94,15 +94,13 @@ func createTopo(networkID string, nodes interface{}, links interface{}) topo.IET
 			if key == "dest-node" {
 				link := network.GetLink(linkID)
 				dest := link.GetOrCreateDestination()
-				destNode := value.(string)
-				dest.DestNode = &destNode
+				dest.DestNode = ygot.String(value.(string))
 			}
 
 			if key == "dest-tp" {
 				link := network.GetLink(linkID)
 				dest := link.GetOrCreateDestination()
-				destTp := value.(string)
-				dest.DestTp = &destTp
+				dest.DestTp = ygot.String(value.(string))
 
 			}
 		}
