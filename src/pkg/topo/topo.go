@@ -18,10 +18,10 @@ import (
 	"fmt"
 	"reflect"
 
-	"github.com/openconfig/ygot/ygot"
-	"github.com/openconfig/goyang/pkg/yang"
-	"github.com/openconfig/ygot/ytypes"
 	gpb "github.com/openconfig/gnmi/proto/gnmi"
+	"github.com/openconfig/goyang/pkg/yang"
+	"github.com/openconfig/ygot/ygot"
+	"github.com/openconfig/ygot/ytypes"
 )
 
 // Binary is a type that is used for fields that have a YANG type of
@@ -42,7 +42,7 @@ var (
 func init() {
 	var err error
 	if SchemaTree, err = UnzipSchema(); err != nil {
-		panic("schema error: " +  err.Error())
+		panic("schema error: " + err.Error())
 	}
 }
 
@@ -54,9 +54,9 @@ func Schema() (*ytypes.Schema, error) {
 	}
 
 	return &ytypes.Schema{
-		Root: &Topology{},
+		Root:       &Topology{},
 		SchemaTree: uzp,
-		Unmarshal: Unmarshal,
+		Unmarshal:  Unmarshal,
 	}, nil
 }
 
@@ -81,7 +81,7 @@ func Unmarshal(data []byte, destStruct ygot.GoStruct, opts ...ytypes.UnmarshalOp
 	tn := reflect.TypeOf(destStruct).Elem().Name()
 	schema, ok := SchemaTree[tn]
 	if !ok {
-		return fmt.Errorf("could not find schema for type %s", tn )
+		return fmt.Errorf("could not find schema for type %s", tn)
 	}
 	var jsonTree interface{}
 	if err := json.Unmarshal([]byte(data), &jsonTree); err != nil {
@@ -89,26 +89,27 @@ func Unmarshal(data []byte, destStruct ygot.GoStruct, opts ...ytypes.UnmarshalOp
 	}
 	return ytypes.Unmarshal(schema, destStruct, jsonTree, opts...)
 }
+
 // ΓModelData contains the catalogue information corresponding to the modules for
 // which Go code was generated.
 var ΓModelData = []*gpb.ModelData{
-    {
-		Name: "ietf-inet-types",
+	{
+		Name:         "ietf-inet-types",
 		Organization: "IETF NETMOD (NETCONF Data Modeling Language) Working Group",
 	},
-    {
-		Name: "ietf-network",
+	{
+		Name:         "ietf-network",
 		Organization: "IETF I2RS (Interface to the Routing System) Working Group",
 	},
-    {
-		Name: "ietf-network-topology",
+	{
+		Name:         "ietf-network-topology",
 		Organization: "IETF I2RS (Interface to the Routing System) Working Group",
 	},
 }
 
 // IETFNetwork_Networks represents the /ietf-network/networks YANG schema element.
 type IETFNetwork_Networks struct {
-	Network	map[string]*IETFNetwork_Networks_Network	`path:"network" module:"ietf-network"`
+	Network map[string]*IETFNetwork_Networks_Network `path:"network" module:"ietf-network"`
 }
 
 // IsYANGGoStruct ensures that IETFNetwork_Networks implements the yang.GoStruct
@@ -119,7 +120,7 @@ func (*IETFNetwork_Networks) IsYANGGoStruct() {}
 // NewNetwork creates a new entry in the Network list of the
 // IETFNetwork_Networks struct. The keys of the list are populated from the input
 // arguments.
-func (t *IETFNetwork_Networks) NewNetwork(NetworkId string) (*IETFNetwork_Networks_Network, error){
+func (t *IETFNetwork_Networks) NewNetwork(NetworkId string) (*IETFNetwork_Networks_Network, error) {
 
 	// Initialise the list within the receiver struct if it has not already been
 	// created.
@@ -146,7 +147,7 @@ func (t *IETFNetwork_Networks) NewNetwork(NetworkId string) (*IETFNetwork_Networ
 // GetOrCreateNetwork retrieves the value with the specified keys from
 // the receiver IETFNetwork_Networks. If the entry does not exist, then it is created.
 // It returns the existing or new list member.
-func (t *IETFNetwork_Networks) GetOrCreateNetwork(NetworkId string) (*IETFNetwork_Networks_Network){
+func (t *IETFNetwork_Networks) GetOrCreateNetwork(NetworkId string) *IETFNetwork_Networks_Network {
 
 	key := NetworkId
 
@@ -166,18 +167,18 @@ func (t *IETFNetwork_Networks) GetOrCreateNetwork(NetworkId string) (*IETFNetwor
 // the Network map field of IETFNetwork_Networks. If the receiver is nil, or
 // the specified key is not present in the list, nil is returned such that Get*
 // methods may be safely chained.
-func (t *IETFNetwork_Networks) GetNetwork(NetworkId string) (*IETFNetwork_Networks_Network){
+func (t *IETFNetwork_Networks) GetNetwork(NetworkId string) *IETFNetwork_Networks_Network {
 
 	if t == nil {
 		return nil
 	}
 
-  key := NetworkId
+	key := NetworkId
 
-  if lm, ok := t.Network[key]; ok {
-    return lm
-  }
-  return nil
+	if lm, ok := t.Network[key]; ok {
+		return lm
+	}
+	return nil
 }
 
 // DeleteNetwork deletes the value with the specified keys from
@@ -222,14 +223,13 @@ func (t *IETFNetwork_Networks) Validate(opts ...ygot.ValidationOption) error {
 // that are included in the generated code.
 func (t *IETFNetwork_Networks) ΛEnumTypeMap() map[string][]reflect.Type { return ΛEnumTypes }
 
-
 // IETFNetwork_Networks_Network represents the /ietf-network/networks/network YANG schema element.
 type IETFNetwork_Networks_Network struct {
-	Link	map[string]*IETFNetwork_Networks_Network_Link	`path:"link" module:"ietf-network-topology"`
-	NetworkId	*string	`path:"network-id" module:"ietf-network"`
-	NetworkTypes	*IETFNetwork_Networks_Network_NetworkTypes	`path:"network-types" module:"ietf-network"`
-	Node	map[string]*IETFNetwork_Networks_Network_Node	`path:"node" module:"ietf-network"`
-	SupportingNetwork	map[string]*IETFNetwork_Networks_Network_SupportingNetwork	`path:"supporting-network" module:"ietf-network"`
+	Link              map[string]*IETFNetwork_Networks_Network_Link              `path:"link" module:"ietf-network-topology"`
+	NetworkId         *string                                                    `path:"network-id" module:"ietf-network"`
+	NetworkTypes      *IETFNetwork_Networks_Network_NetworkTypes                 `path:"network-types" module:"ietf-network"`
+	Node              map[string]*IETFNetwork_Networks_Network_Node              `path:"node" module:"ietf-network"`
+	SupportingNetwork map[string]*IETFNetwork_Networks_Network_SupportingNetwork `path:"supporting-network" module:"ietf-network"`
 }
 
 // IsYANGGoStruct ensures that IETFNetwork_Networks_Network implements the yang.GoStruct
@@ -240,7 +240,7 @@ func (*IETFNetwork_Networks_Network) IsYANGGoStruct() {}
 // NewLink creates a new entry in the Link list of the
 // IETFNetwork_Networks_Network struct. The keys of the list are populated from the input
 // arguments.
-func (t *IETFNetwork_Networks_Network) NewLink(LinkId string) (*IETFNetwork_Networks_Network_Link, error){
+func (t *IETFNetwork_Networks_Network) NewLink(LinkId string) (*IETFNetwork_Networks_Network_Link, error) {
 
 	// Initialise the list within the receiver struct if it has not already been
 	// created.
@@ -267,7 +267,7 @@ func (t *IETFNetwork_Networks_Network) NewLink(LinkId string) (*IETFNetwork_Netw
 // GetOrCreateLink retrieves the value with the specified keys from
 // the receiver IETFNetwork_Networks_Network. If the entry does not exist, then it is created.
 // It returns the existing or new list member.
-func (t *IETFNetwork_Networks_Network) GetOrCreateLink(LinkId string) (*IETFNetwork_Networks_Network_Link){
+func (t *IETFNetwork_Networks_Network) GetOrCreateLink(LinkId string) *IETFNetwork_Networks_Network_Link {
 
 	key := LinkId
 
@@ -287,18 +287,18 @@ func (t *IETFNetwork_Networks_Network) GetOrCreateLink(LinkId string) (*IETFNetw
 // the Link map field of IETFNetwork_Networks_Network. If the receiver is nil, or
 // the specified key is not present in the list, nil is returned such that Get*
 // methods may be safely chained.
-func (t *IETFNetwork_Networks_Network) GetLink(LinkId string) (*IETFNetwork_Networks_Network_Link){
+func (t *IETFNetwork_Networks_Network) GetLink(LinkId string) *IETFNetwork_Networks_Network_Link {
 
 	if t == nil {
 		return nil
 	}
 
-  key := LinkId
+	key := LinkId
 
-  if lm, ok := t.Link[key]; ok {
-    return lm
-  }
-  return nil
+	if lm, ok := t.Link[key]; ok {
+		return lm
+	}
+	return nil
 }
 
 // DeleteLink deletes the value with the specified keys from
@@ -334,7 +334,7 @@ func (t *IETFNetwork_Networks_Network) AppendLink(v *IETFNetwork_Networks_Networ
 // NewNode creates a new entry in the Node list of the
 // IETFNetwork_Networks_Network struct. The keys of the list are populated from the input
 // arguments.
-func (t *IETFNetwork_Networks_Network) NewNode(NodeId string) (*IETFNetwork_Networks_Network_Node, error){
+func (t *IETFNetwork_Networks_Network) NewNode(NodeId string) (*IETFNetwork_Networks_Network_Node, error) {
 
 	// Initialise the list within the receiver struct if it has not already been
 	// created.
@@ -361,7 +361,7 @@ func (t *IETFNetwork_Networks_Network) NewNode(NodeId string) (*IETFNetwork_Netw
 // GetOrCreateNode retrieves the value with the specified keys from
 // the receiver IETFNetwork_Networks_Network. If the entry does not exist, then it is created.
 // It returns the existing or new list member.
-func (t *IETFNetwork_Networks_Network) GetOrCreateNode(NodeId string) (*IETFNetwork_Networks_Network_Node){
+func (t *IETFNetwork_Networks_Network) GetOrCreateNode(NodeId string) *IETFNetwork_Networks_Network_Node {
 
 	key := NodeId
 
@@ -381,18 +381,18 @@ func (t *IETFNetwork_Networks_Network) GetOrCreateNode(NodeId string) (*IETFNetw
 // the Node map field of IETFNetwork_Networks_Network. If the receiver is nil, or
 // the specified key is not present in the list, nil is returned such that Get*
 // methods may be safely chained.
-func (t *IETFNetwork_Networks_Network) GetNode(NodeId string) (*IETFNetwork_Networks_Network_Node){
+func (t *IETFNetwork_Networks_Network) GetNode(NodeId string) *IETFNetwork_Networks_Network_Node {
 
 	if t == nil {
 		return nil
 	}
 
-  key := NodeId
+	key := NodeId
 
-  if lm, ok := t.Node[key]; ok {
-    return lm
-  }
-  return nil
+	if lm, ok := t.Node[key]; ok {
+		return lm
+	}
+	return nil
 }
 
 // DeleteNode deletes the value with the specified keys from
@@ -428,7 +428,7 @@ func (t *IETFNetwork_Networks_Network) AppendNode(v *IETFNetwork_Networks_Networ
 // NewSupportingNetwork creates a new entry in the SupportingNetwork list of the
 // IETFNetwork_Networks_Network struct. The keys of the list are populated from the input
 // arguments.
-func (t *IETFNetwork_Networks_Network) NewSupportingNetwork(NetworkRef string) (*IETFNetwork_Networks_Network_SupportingNetwork, error){
+func (t *IETFNetwork_Networks_Network) NewSupportingNetwork(NetworkRef string) (*IETFNetwork_Networks_Network_SupportingNetwork, error) {
 
 	// Initialise the list within the receiver struct if it has not already been
 	// created.
@@ -455,7 +455,7 @@ func (t *IETFNetwork_Networks_Network) NewSupportingNetwork(NetworkRef string) (
 // GetOrCreateSupportingNetwork retrieves the value with the specified keys from
 // the receiver IETFNetwork_Networks_Network. If the entry does not exist, then it is created.
 // It returns the existing or new list member.
-func (t *IETFNetwork_Networks_Network) GetOrCreateSupportingNetwork(NetworkRef string) (*IETFNetwork_Networks_Network_SupportingNetwork){
+func (t *IETFNetwork_Networks_Network) GetOrCreateSupportingNetwork(NetworkRef string) *IETFNetwork_Networks_Network_SupportingNetwork {
 
 	key := NetworkRef
 
@@ -475,18 +475,18 @@ func (t *IETFNetwork_Networks_Network) GetOrCreateSupportingNetwork(NetworkRef s
 // the SupportingNetwork map field of IETFNetwork_Networks_Network. If the receiver is nil, or
 // the specified key is not present in the list, nil is returned such that Get*
 // methods may be safely chained.
-func (t *IETFNetwork_Networks_Network) GetSupportingNetwork(NetworkRef string) (*IETFNetwork_Networks_Network_SupportingNetwork){
+func (t *IETFNetwork_Networks_Network) GetSupportingNetwork(NetworkRef string) *IETFNetwork_Networks_Network_SupportingNetwork {
 
 	if t == nil {
 		return nil
 	}
 
-  key := NetworkRef
+	key := NetworkRef
 
-  if lm, ok := t.SupportingNetwork[key]; ok {
-    return lm
-  }
-  return nil
+	if lm, ok := t.SupportingNetwork[key]; ok {
+		return lm
+	}
+	return nil
 }
 
 // DeleteSupportingNetwork deletes the value with the specified keys from
@@ -576,13 +576,12 @@ func (t *IETFNetwork_Networks_Network) Validate(opts ...ygot.ValidationOption) e
 // that are included in the generated code.
 func (t *IETFNetwork_Networks_Network) ΛEnumTypeMap() map[string][]reflect.Type { return ΛEnumTypes }
 
-
 // IETFNetwork_Networks_Network_Link represents the /ietf-network/networks/network/link YANG schema element.
 type IETFNetwork_Networks_Network_Link struct {
-	Destination	*IETFNetwork_Networks_Network_Link_Destination	`path:"destination" module:"ietf-network-topology"`
-	LinkId	*string	`path:"link-id" module:"ietf-network-topology"`
-	Source	*IETFNetwork_Networks_Network_Link_Source	`path:"source" module:"ietf-network-topology"`
-	SupportingLink	map[IETFNetwork_Networks_Network_Link_SupportingLink_Key]*IETFNetwork_Networks_Network_Link_SupportingLink	`path:"supporting-link" module:"ietf-network-topology"`
+	Destination    *IETFNetwork_Networks_Network_Link_Destination                                                             `path:"destination" module:"ietf-network-topology"`
+	LinkId         *string                                                                                                    `path:"link-id" module:"ietf-network-topology"`
+	Source         *IETFNetwork_Networks_Network_Link_Source                                                                  `path:"source" module:"ietf-network-topology"`
+	SupportingLink map[IETFNetwork_Networks_Network_Link_SupportingLink_Key]*IETFNetwork_Networks_Network_Link_SupportingLink `path:"supporting-link" module:"ietf-network-topology"`
 }
 
 // IsYANGGoStruct ensures that IETFNetwork_Networks_Network_Link implements the yang.GoStruct
@@ -592,14 +591,14 @@ func (*IETFNetwork_Networks_Network_Link) IsYANGGoStruct() {}
 
 // IETFNetwork_Networks_Network_Link_SupportingLink_Key represents the key for list SupportingLink of element /ietf-network/networks/network/link.
 type IETFNetwork_Networks_Network_Link_SupportingLink_Key struct {
-	NetworkRef	string	`path:"network-ref"`
-	LinkRef	string	`path:"link-ref"`
+	NetworkRef string `path:"network-ref"`
+	LinkRef    string `path:"link-ref"`
 }
 
 // NewSupportingLink creates a new entry in the SupportingLink list of the
 // IETFNetwork_Networks_Network_Link struct. The keys of the list are populated from the input
 // arguments.
-func (t *IETFNetwork_Networks_Network_Link) NewSupportingLink(NetworkRef string, LinkRef string) (*IETFNetwork_Networks_Network_Link_SupportingLink, error){
+func (t *IETFNetwork_Networks_Network_Link) NewSupportingLink(NetworkRef string, LinkRef string) (*IETFNetwork_Networks_Network_Link_SupportingLink, error) {
 
 	// Initialise the list within the receiver struct if it has not already been
 	// created.
@@ -609,7 +608,7 @@ func (t *IETFNetwork_Networks_Network_Link) NewSupportingLink(NetworkRef string,
 
 	key := IETFNetwork_Networks_Network_Link_SupportingLink_Key{
 		NetworkRef: NetworkRef,
-		LinkRef: LinkRef,
+		LinkRef:    LinkRef,
 	}
 
 	// Ensure that this key has not already been used in the
@@ -621,7 +620,7 @@ func (t *IETFNetwork_Networks_Network_Link) NewSupportingLink(NetworkRef string,
 
 	t.SupportingLink[key] = &IETFNetwork_Networks_Network_Link_SupportingLink{
 		NetworkRef: &NetworkRef,
-		LinkRef: &LinkRef,
+		LinkRef:    &LinkRef,
 	}
 
 	return t.SupportingLink[key], nil
@@ -630,11 +629,11 @@ func (t *IETFNetwork_Networks_Network_Link) NewSupportingLink(NetworkRef string,
 // GetOrCreateSupportingLink retrieves the value with the specified keys from
 // the receiver IETFNetwork_Networks_Network_Link. If the entry does not exist, then it is created.
 // It returns the existing or new list member.
-func (t *IETFNetwork_Networks_Network_Link) GetOrCreateSupportingLink(NetworkRef string, LinkRef string) (*IETFNetwork_Networks_Network_Link_SupportingLink){
+func (t *IETFNetwork_Networks_Network_Link) GetOrCreateSupportingLink(NetworkRef string, LinkRef string) *IETFNetwork_Networks_Network_Link_SupportingLink {
 
 	key := IETFNetwork_Networks_Network_Link_SupportingLink_Key{
 		NetworkRef: NetworkRef,
-		LinkRef: LinkRef,
+		LinkRef:    LinkRef,
 	}
 
 	if v, ok := t.SupportingLink[key]; ok {
@@ -653,21 +652,21 @@ func (t *IETFNetwork_Networks_Network_Link) GetOrCreateSupportingLink(NetworkRef
 // the SupportingLink map field of IETFNetwork_Networks_Network_Link. If the receiver is nil, or
 // the specified key is not present in the list, nil is returned such that Get*
 // methods may be safely chained.
-func (t *IETFNetwork_Networks_Network_Link) GetSupportingLink(NetworkRef string, LinkRef string) (*IETFNetwork_Networks_Network_Link_SupportingLink){
+func (t *IETFNetwork_Networks_Network_Link) GetSupportingLink(NetworkRef string, LinkRef string) *IETFNetwork_Networks_Network_Link_SupportingLink {
 
 	if t == nil {
 		return nil
 	}
 
-  key := IETFNetwork_Networks_Network_Link_SupportingLink_Key{
+	key := IETFNetwork_Networks_Network_Link_SupportingLink_Key{
 		NetworkRef: NetworkRef,
-		LinkRef: LinkRef,
+		LinkRef:    LinkRef,
 	}
 
-  if lm, ok := t.SupportingLink[key]; ok {
-    return lm
-  }
-  return nil
+	if lm, ok := t.SupportingLink[key]; ok {
+		return lm
+	}
+	return nil
 }
 
 // DeleteSupportingLink deletes the value with the specified keys from
@@ -676,7 +675,7 @@ func (t *IETFNetwork_Networks_Network_Link) GetSupportingLink(NetworkRef string,
 func (t *IETFNetwork_Networks_Network_Link) DeleteSupportingLink(NetworkRef string, LinkRef string) {
 	key := IETFNetwork_Networks_Network_Link_SupportingLink_Key{
 		NetworkRef: NetworkRef,
-		LinkRef: LinkRef,
+		LinkRef:    LinkRef,
 	}
 
 	delete(t.SupportingLink, key)
@@ -687,8 +686,7 @@ func (t *IETFNetwork_Networks_Network_Link) DeleteSupportingLink(NetworkRef stri
 // the supplied IETFNetwork_Networks_Network_Link_SupportingLink already exist in the list, an error is
 // returned.
 func (t *IETFNetwork_Networks_Network_Link) AppendSupportingLink(v *IETFNetwork_Networks_Network_Link_SupportingLink) error {
-	key := IETFNetwork_Networks_Network_Link_SupportingLink_Key{NetworkRef: *v.NetworkRef,LinkRef: *v.LinkRef,
-	}
+	key := IETFNetwork_Networks_Network_Link_SupportingLink_Key{NetworkRef: *v.NetworkRef, LinkRef: *v.LinkRef}
 
 	// Initialise the list within the receiver struct if it has not already been
 	// created.
@@ -779,13 +777,14 @@ func (t *IETFNetwork_Networks_Network_Link) Validate(opts ...ygot.ValidationOpti
 
 // ΛEnumTypeMap returns a map, keyed by YANG schema path, of the enumerated types
 // that are included in the generated code.
-func (t *IETFNetwork_Networks_Network_Link) ΛEnumTypeMap() map[string][]reflect.Type { return ΛEnumTypes }
-
+func (t *IETFNetwork_Networks_Network_Link) ΛEnumTypeMap() map[string][]reflect.Type {
+	return ΛEnumTypes
+}
 
 // IETFNetwork_Networks_Network_Link_Destination represents the /ietf-network/networks/network/link/destination YANG schema element.
 type IETFNetwork_Networks_Network_Link_Destination struct {
-	DestNode	*string	`path:"dest-node" module:"ietf-network-topology"`
-	DestTp	*string	`path:"dest-tp" module:"ietf-network-topology"`
+	DestNode *string `path:"dest-node" module:"ietf-network-topology"`
+	DestTp   *string `path:"dest-tp" module:"ietf-network-topology"`
 }
 
 // IsYANGGoStruct ensures that IETFNetwork_Networks_Network_Link_Destination implements the yang.GoStruct
@@ -831,13 +830,14 @@ func (t *IETFNetwork_Networks_Network_Link_Destination) Validate(opts ...ygot.Va
 
 // ΛEnumTypeMap returns a map, keyed by YANG schema path, of the enumerated types
 // that are included in the generated code.
-func (t *IETFNetwork_Networks_Network_Link_Destination) ΛEnumTypeMap() map[string][]reflect.Type { return ΛEnumTypes }
-
+func (t *IETFNetwork_Networks_Network_Link_Destination) ΛEnumTypeMap() map[string][]reflect.Type {
+	return ΛEnumTypes
+}
 
 // IETFNetwork_Networks_Network_Link_Source represents the /ietf-network/networks/network/link/source YANG schema element.
 type IETFNetwork_Networks_Network_Link_Source struct {
-	SourceNode	*string	`path:"source-node" module:"ietf-network-topology"`
-	SourceTp	*string	`path:"source-tp" module:"ietf-network-topology"`
+	SourceNode *string `path:"source-node" module:"ietf-network-topology"`
+	SourceTp   *string `path:"source-tp" module:"ietf-network-topology"`
 }
 
 // IsYANGGoStruct ensures that IETFNetwork_Networks_Network_Link_Source implements the yang.GoStruct
@@ -873,6 +873,16 @@ func (t *IETFNetwork_Networks_Network_Link_Source) GetSourceTp() string {
 	return *t.SourceTp
 }
 
+// SetSourceTp sets the value of the leaf SourceTp from the IETFNetwork_Networks_Network_Link_Source
+// struct.
+func (t *IETFNetwork_Networks_Network_Link_Source) SetSourceTp(val string) bool {
+	if val == "" {
+		return false
+	}
+	t.SourceTp = ygot.String(val)
+	return true
+}
+
 // Validate validates s against the YANG schema corresponding to its type.
 func (t *IETFNetwork_Networks_Network_Link_Source) Validate(opts ...ygot.ValidationOption) error {
 	if err := ytypes.Validate(SchemaTree["IETFNetwork_Networks_Network_Link_Source"], t, opts...); err != nil {
@@ -883,13 +893,14 @@ func (t *IETFNetwork_Networks_Network_Link_Source) Validate(opts ...ygot.Validat
 
 // ΛEnumTypeMap returns a map, keyed by YANG schema path, of the enumerated types
 // that are included in the generated code.
-func (t *IETFNetwork_Networks_Network_Link_Source) ΛEnumTypeMap() map[string][]reflect.Type { return ΛEnumTypes }
-
+func (t *IETFNetwork_Networks_Network_Link_Source) ΛEnumTypeMap() map[string][]reflect.Type {
+	return ΛEnumTypes
+}
 
 // IETFNetwork_Networks_Network_Link_SupportingLink represents the /ietf-network/networks/network/link/supporting-link YANG schema element.
 type IETFNetwork_Networks_Network_Link_SupportingLink struct {
-	LinkRef	*string	`path:"link-ref" module:"ietf-network-topology"`
-	NetworkRef	*string	`path:"network-ref" module:"ietf-network-topology"`
+	LinkRef    *string `path:"link-ref" module:"ietf-network-topology"`
+	NetworkRef *string `path:"network-ref" module:"ietf-network-topology"`
 }
 
 // IsYANGGoStruct ensures that IETFNetwork_Networks_Network_Link_SupportingLink implements the yang.GoStruct
@@ -936,7 +947,7 @@ func (t *IETFNetwork_Networks_Network_Link_SupportingLink) ΛListKeyMap() (map[s
 	}
 
 	return map[string]interface{}{
-		"link-ref": *t.LinkRef,
+		"link-ref":    *t.LinkRef,
 		"network-ref": *t.NetworkRef,
 	}, nil
 }
@@ -951,8 +962,9 @@ func (t *IETFNetwork_Networks_Network_Link_SupportingLink) Validate(opts ...ygot
 
 // ΛEnumTypeMap returns a map, keyed by YANG schema path, of the enumerated types
 // that are included in the generated code.
-func (t *IETFNetwork_Networks_Network_Link_SupportingLink) ΛEnumTypeMap() map[string][]reflect.Type { return ΛEnumTypes }
-
+func (t *IETFNetwork_Networks_Network_Link_SupportingLink) ΛEnumTypeMap() map[string][]reflect.Type {
+	return ΛEnumTypes
+}
 
 // IETFNetwork_Networks_Network_NetworkTypes represents the /ietf-network/networks/network/network-types YANG schema element.
 type IETFNetwork_Networks_Network_NetworkTypes struct {
@@ -973,14 +985,15 @@ func (t *IETFNetwork_Networks_Network_NetworkTypes) Validate(opts ...ygot.Valida
 
 // ΛEnumTypeMap returns a map, keyed by YANG schema path, of the enumerated types
 // that are included in the generated code.
-func (t *IETFNetwork_Networks_Network_NetworkTypes) ΛEnumTypeMap() map[string][]reflect.Type { return ΛEnumTypes }
-
+func (t *IETFNetwork_Networks_Network_NetworkTypes) ΛEnumTypeMap() map[string][]reflect.Type {
+	return ΛEnumTypes
+}
 
 // IETFNetwork_Networks_Network_Node represents the /ietf-network/networks/network/node YANG schema element.
 type IETFNetwork_Networks_Network_Node struct {
-	NodeId	*string	`path:"node-id" module:"ietf-network"`
-	SupportingNode	map[IETFNetwork_Networks_Network_Node_SupportingNode_Key]*IETFNetwork_Networks_Network_Node_SupportingNode	`path:"supporting-node" module:"ietf-network"`
-	TerminationPoint	map[string]*IETFNetwork_Networks_Network_Node_TerminationPoint	`path:"termination-point" module:"ietf-network-topology"`
+	NodeId           *string                                                                                                    `path:"node-id" module:"ietf-network"`
+	SupportingNode   map[IETFNetwork_Networks_Network_Node_SupportingNode_Key]*IETFNetwork_Networks_Network_Node_SupportingNode `path:"supporting-node" module:"ietf-network"`
+	TerminationPoint map[string]*IETFNetwork_Networks_Network_Node_TerminationPoint                                             `path:"termination-point" module:"ietf-network-topology"`
 }
 
 // IsYANGGoStruct ensures that IETFNetwork_Networks_Network_Node implements the yang.GoStruct
@@ -990,14 +1003,14 @@ func (*IETFNetwork_Networks_Network_Node) IsYANGGoStruct() {}
 
 // IETFNetwork_Networks_Network_Node_SupportingNode_Key represents the key for list SupportingNode of element /ietf-network/networks/network/node.
 type IETFNetwork_Networks_Network_Node_SupportingNode_Key struct {
-	NetworkRef	string	`path:"network-ref"`
-	NodeRef	string	`path:"node-ref"`
+	NetworkRef string `path:"network-ref"`
+	NodeRef    string `path:"node-ref"`
 }
 
 // NewSupportingNode creates a new entry in the SupportingNode list of the
 // IETFNetwork_Networks_Network_Node struct. The keys of the list are populated from the input
 // arguments.
-func (t *IETFNetwork_Networks_Network_Node) NewSupportingNode(NetworkRef string, NodeRef string) (*IETFNetwork_Networks_Network_Node_SupportingNode, error){
+func (t *IETFNetwork_Networks_Network_Node) NewSupportingNode(NetworkRef string, NodeRef string) (*IETFNetwork_Networks_Network_Node_SupportingNode, error) {
 
 	// Initialise the list within the receiver struct if it has not already been
 	// created.
@@ -1007,7 +1020,7 @@ func (t *IETFNetwork_Networks_Network_Node) NewSupportingNode(NetworkRef string,
 
 	key := IETFNetwork_Networks_Network_Node_SupportingNode_Key{
 		NetworkRef: NetworkRef,
-		NodeRef: NodeRef,
+		NodeRef:    NodeRef,
 	}
 
 	// Ensure that this key has not already been used in the
@@ -1019,7 +1032,7 @@ func (t *IETFNetwork_Networks_Network_Node) NewSupportingNode(NetworkRef string,
 
 	t.SupportingNode[key] = &IETFNetwork_Networks_Network_Node_SupportingNode{
 		NetworkRef: &NetworkRef,
-		NodeRef: &NodeRef,
+		NodeRef:    &NodeRef,
 	}
 
 	return t.SupportingNode[key], nil
@@ -1028,11 +1041,11 @@ func (t *IETFNetwork_Networks_Network_Node) NewSupportingNode(NetworkRef string,
 // GetOrCreateSupportingNode retrieves the value with the specified keys from
 // the receiver IETFNetwork_Networks_Network_Node. If the entry does not exist, then it is created.
 // It returns the existing or new list member.
-func (t *IETFNetwork_Networks_Network_Node) GetOrCreateSupportingNode(NetworkRef string, NodeRef string) (*IETFNetwork_Networks_Network_Node_SupportingNode){
+func (t *IETFNetwork_Networks_Network_Node) GetOrCreateSupportingNode(NetworkRef string, NodeRef string) *IETFNetwork_Networks_Network_Node_SupportingNode {
 
 	key := IETFNetwork_Networks_Network_Node_SupportingNode_Key{
 		NetworkRef: NetworkRef,
-		NodeRef: NodeRef,
+		NodeRef:    NodeRef,
 	}
 
 	if v, ok := t.SupportingNode[key]; ok {
@@ -1051,21 +1064,21 @@ func (t *IETFNetwork_Networks_Network_Node) GetOrCreateSupportingNode(NetworkRef
 // the SupportingNode map field of IETFNetwork_Networks_Network_Node. If the receiver is nil, or
 // the specified key is not present in the list, nil is returned such that Get*
 // methods may be safely chained.
-func (t *IETFNetwork_Networks_Network_Node) GetSupportingNode(NetworkRef string, NodeRef string) (*IETFNetwork_Networks_Network_Node_SupportingNode){
+func (t *IETFNetwork_Networks_Network_Node) GetSupportingNode(NetworkRef string, NodeRef string) *IETFNetwork_Networks_Network_Node_SupportingNode {
 
 	if t == nil {
 		return nil
 	}
 
-  key := IETFNetwork_Networks_Network_Node_SupportingNode_Key{
+	key := IETFNetwork_Networks_Network_Node_SupportingNode_Key{
 		NetworkRef: NetworkRef,
-		NodeRef: NodeRef,
+		NodeRef:    NodeRef,
 	}
 
-  if lm, ok := t.SupportingNode[key]; ok {
-    return lm
-  }
-  return nil
+	if lm, ok := t.SupportingNode[key]; ok {
+		return lm
+	}
+	return nil
 }
 
 // DeleteSupportingNode deletes the value with the specified keys from
@@ -1074,7 +1087,7 @@ func (t *IETFNetwork_Networks_Network_Node) GetSupportingNode(NetworkRef string,
 func (t *IETFNetwork_Networks_Network_Node) DeleteSupportingNode(NetworkRef string, NodeRef string) {
 	key := IETFNetwork_Networks_Network_Node_SupportingNode_Key{
 		NetworkRef: NetworkRef,
-		NodeRef: NodeRef,
+		NodeRef:    NodeRef,
 	}
 
 	delete(t.SupportingNode, key)
@@ -1085,8 +1098,7 @@ func (t *IETFNetwork_Networks_Network_Node) DeleteSupportingNode(NetworkRef stri
 // the supplied IETFNetwork_Networks_Network_Node_SupportingNode already exist in the list, an error is
 // returned.
 func (t *IETFNetwork_Networks_Network_Node) AppendSupportingNode(v *IETFNetwork_Networks_Network_Node_SupportingNode) error {
-	key := IETFNetwork_Networks_Network_Node_SupportingNode_Key{NetworkRef: *v.NetworkRef,NodeRef: *v.NodeRef,
-	}
+	key := IETFNetwork_Networks_Network_Node_SupportingNode_Key{NetworkRef: *v.NetworkRef, NodeRef: *v.NodeRef}
 
 	// Initialise the list within the receiver struct if it has not already been
 	// created.
@@ -1105,7 +1117,7 @@ func (t *IETFNetwork_Networks_Network_Node) AppendSupportingNode(v *IETFNetwork_
 // NewTerminationPoint creates a new entry in the TerminationPoint list of the
 // IETFNetwork_Networks_Network_Node struct. The keys of the list are populated from the input
 // arguments.
-func (t *IETFNetwork_Networks_Network_Node) NewTerminationPoint(TpId string) (*IETFNetwork_Networks_Network_Node_TerminationPoint, error){
+func (t *IETFNetwork_Networks_Network_Node) NewTerminationPoint(TpId string) (*IETFNetwork_Networks_Network_Node_TerminationPoint, error) {
 
 	// Initialise the list within the receiver struct if it has not already been
 	// created.
@@ -1132,7 +1144,7 @@ func (t *IETFNetwork_Networks_Network_Node) NewTerminationPoint(TpId string) (*I
 // GetOrCreateTerminationPoint retrieves the value with the specified keys from
 // the receiver IETFNetwork_Networks_Network_Node. If the entry does not exist, then it is created.
 // It returns the existing or new list member.
-func (t *IETFNetwork_Networks_Network_Node) GetOrCreateTerminationPoint(TpId string) (*IETFNetwork_Networks_Network_Node_TerminationPoint){
+func (t *IETFNetwork_Networks_Network_Node) GetOrCreateTerminationPoint(TpId string) *IETFNetwork_Networks_Network_Node_TerminationPoint {
 
 	key := TpId
 
@@ -1152,18 +1164,18 @@ func (t *IETFNetwork_Networks_Network_Node) GetOrCreateTerminationPoint(TpId str
 // the TerminationPoint map field of IETFNetwork_Networks_Network_Node. If the receiver is nil, or
 // the specified key is not present in the list, nil is returned such that Get*
 // methods may be safely chained.
-func (t *IETFNetwork_Networks_Network_Node) GetTerminationPoint(TpId string) (*IETFNetwork_Networks_Network_Node_TerminationPoint){
+func (t *IETFNetwork_Networks_Network_Node) GetTerminationPoint(TpId string) *IETFNetwork_Networks_Network_Node_TerminationPoint {
 
 	if t == nil {
 		return nil
 	}
 
-  key := TpId
+	key := TpId
 
-  if lm, ok := t.TerminationPoint[key]; ok {
-    return lm
-  }
-  return nil
+	if lm, ok := t.TerminationPoint[key]; ok {
+		return lm
+	}
+	return nil
 }
 
 // DeleteTerminationPoint deletes the value with the specified keys from
@@ -1231,13 +1243,14 @@ func (t *IETFNetwork_Networks_Network_Node) Validate(opts ...ygot.ValidationOpti
 
 // ΛEnumTypeMap returns a map, keyed by YANG schema path, of the enumerated types
 // that are included in the generated code.
-func (t *IETFNetwork_Networks_Network_Node) ΛEnumTypeMap() map[string][]reflect.Type { return ΛEnumTypes }
-
+func (t *IETFNetwork_Networks_Network_Node) ΛEnumTypeMap() map[string][]reflect.Type {
+	return ΛEnumTypes
+}
 
 // IETFNetwork_Networks_Network_Node_SupportingNode represents the /ietf-network/networks/network/node/supporting-node YANG schema element.
 type IETFNetwork_Networks_Network_Node_SupportingNode struct {
-	NetworkRef	*string	`path:"network-ref" module:"ietf-network"`
-	NodeRef	*string	`path:"node-ref" module:"ietf-network"`
+	NetworkRef *string `path:"network-ref" module:"ietf-network"`
+	NodeRef    *string `path:"node-ref" module:"ietf-network"`
 }
 
 // IsYANGGoStruct ensures that IETFNetwork_Networks_Network_Node_SupportingNode implements the yang.GoStruct
@@ -1285,7 +1298,7 @@ func (t *IETFNetwork_Networks_Network_Node_SupportingNode) ΛListKeyMap() (map[s
 
 	return map[string]interface{}{
 		"network-ref": *t.NetworkRef,
-		"node-ref": *t.NodeRef,
+		"node-ref":    *t.NodeRef,
 	}, nil
 }
 
@@ -1299,13 +1312,14 @@ func (t *IETFNetwork_Networks_Network_Node_SupportingNode) Validate(opts ...ygot
 
 // ΛEnumTypeMap returns a map, keyed by YANG schema path, of the enumerated types
 // that are included in the generated code.
-func (t *IETFNetwork_Networks_Network_Node_SupportingNode) ΛEnumTypeMap() map[string][]reflect.Type { return ΛEnumTypes }
-
+func (t *IETFNetwork_Networks_Network_Node_SupportingNode) ΛEnumTypeMap() map[string][]reflect.Type {
+	return ΛEnumTypes
+}
 
 // IETFNetwork_Networks_Network_Node_TerminationPoint represents the /ietf-network/networks/network/node/termination-point YANG schema element.
 type IETFNetwork_Networks_Network_Node_TerminationPoint struct {
-	SupportingTerminationPoint	map[IETFNetwork_Networks_Network_Node_TerminationPoint_SupportingTerminationPoint_Key]*IETFNetwork_Networks_Network_Node_TerminationPoint_SupportingTerminationPoint	`path:"supporting-termination-point" module:"ietf-network-topology"`
-	TpId	*string	`path:"tp-id" module:"ietf-network-topology"`
+	SupportingTerminationPoint map[IETFNetwork_Networks_Network_Node_TerminationPoint_SupportingTerminationPoint_Key]*IETFNetwork_Networks_Network_Node_TerminationPoint_SupportingTerminationPoint `path:"supporting-termination-point" module:"ietf-network-topology"`
+	TpId                       *string                                                                                                                                                              `path:"tp-id" module:"ietf-network-topology"`
 }
 
 // IsYANGGoStruct ensures that IETFNetwork_Networks_Network_Node_TerminationPoint implements the yang.GoStruct
@@ -1315,15 +1329,15 @@ func (*IETFNetwork_Networks_Network_Node_TerminationPoint) IsYANGGoStruct() {}
 
 // IETFNetwork_Networks_Network_Node_TerminationPoint_SupportingTerminationPoint_Key represents the key for list SupportingTerminationPoint of element /ietf-network/networks/network/node/termination-point.
 type IETFNetwork_Networks_Network_Node_TerminationPoint_SupportingTerminationPoint_Key struct {
-	NetworkRef	string	`path:"network-ref"`
-	NodeRef	string	`path:"node-ref"`
-	TpRef	string	`path:"tp-ref"`
+	NetworkRef string `path:"network-ref"`
+	NodeRef    string `path:"node-ref"`
+	TpRef      string `path:"tp-ref"`
 }
 
 // NewSupportingTerminationPoint creates a new entry in the SupportingTerminationPoint list of the
 // IETFNetwork_Networks_Network_Node_TerminationPoint struct. The keys of the list are populated from the input
 // arguments.
-func (t *IETFNetwork_Networks_Network_Node_TerminationPoint) NewSupportingTerminationPoint(NetworkRef string, NodeRef string, TpRef string) (*IETFNetwork_Networks_Network_Node_TerminationPoint_SupportingTerminationPoint, error){
+func (t *IETFNetwork_Networks_Network_Node_TerminationPoint) NewSupportingTerminationPoint(NetworkRef string, NodeRef string, TpRef string) (*IETFNetwork_Networks_Network_Node_TerminationPoint_SupportingTerminationPoint, error) {
 
 	// Initialise the list within the receiver struct if it has not already been
 	// created.
@@ -1333,8 +1347,8 @@ func (t *IETFNetwork_Networks_Network_Node_TerminationPoint) NewSupportingTermin
 
 	key := IETFNetwork_Networks_Network_Node_TerminationPoint_SupportingTerminationPoint_Key{
 		NetworkRef: NetworkRef,
-		NodeRef: NodeRef,
-		TpRef: TpRef,
+		NodeRef:    NodeRef,
+		TpRef:      TpRef,
 	}
 
 	// Ensure that this key has not already been used in the
@@ -1346,8 +1360,8 @@ func (t *IETFNetwork_Networks_Network_Node_TerminationPoint) NewSupportingTermin
 
 	t.SupportingTerminationPoint[key] = &IETFNetwork_Networks_Network_Node_TerminationPoint_SupportingTerminationPoint{
 		NetworkRef: &NetworkRef,
-		NodeRef: &NodeRef,
-		TpRef: &TpRef,
+		NodeRef:    &NodeRef,
+		TpRef:      &TpRef,
 	}
 
 	return t.SupportingTerminationPoint[key], nil
@@ -1356,12 +1370,12 @@ func (t *IETFNetwork_Networks_Network_Node_TerminationPoint) NewSupportingTermin
 // GetOrCreateSupportingTerminationPoint retrieves the value with the specified keys from
 // the receiver IETFNetwork_Networks_Network_Node_TerminationPoint. If the entry does not exist, then it is created.
 // It returns the existing or new list member.
-func (t *IETFNetwork_Networks_Network_Node_TerminationPoint) GetOrCreateSupportingTerminationPoint(NetworkRef string, NodeRef string, TpRef string) (*IETFNetwork_Networks_Network_Node_TerminationPoint_SupportingTerminationPoint){
+func (t *IETFNetwork_Networks_Network_Node_TerminationPoint) GetOrCreateSupportingTerminationPoint(NetworkRef string, NodeRef string, TpRef string) *IETFNetwork_Networks_Network_Node_TerminationPoint_SupportingTerminationPoint {
 
 	key := IETFNetwork_Networks_Network_Node_TerminationPoint_SupportingTerminationPoint_Key{
 		NetworkRef: NetworkRef,
-		NodeRef: NodeRef,
-		TpRef: TpRef,
+		NodeRef:    NodeRef,
+		TpRef:      TpRef,
 	}
 
 	if v, ok := t.SupportingTerminationPoint[key]; ok {
@@ -1380,22 +1394,22 @@ func (t *IETFNetwork_Networks_Network_Node_TerminationPoint) GetOrCreateSupporti
 // the SupportingTerminationPoint map field of IETFNetwork_Networks_Network_Node_TerminationPoint. If the receiver is nil, or
 // the specified key is not present in the list, nil is returned such that Get*
 // methods may be safely chained.
-func (t *IETFNetwork_Networks_Network_Node_TerminationPoint) GetSupportingTerminationPoint(NetworkRef string, NodeRef string, TpRef string) (*IETFNetwork_Networks_Network_Node_TerminationPoint_SupportingTerminationPoint){
+func (t *IETFNetwork_Networks_Network_Node_TerminationPoint) GetSupportingTerminationPoint(NetworkRef string, NodeRef string, TpRef string) *IETFNetwork_Networks_Network_Node_TerminationPoint_SupportingTerminationPoint {
 
 	if t == nil {
 		return nil
 	}
 
-  key := IETFNetwork_Networks_Network_Node_TerminationPoint_SupportingTerminationPoint_Key{
+	key := IETFNetwork_Networks_Network_Node_TerminationPoint_SupportingTerminationPoint_Key{
 		NetworkRef: NetworkRef,
-		NodeRef: NodeRef,
-		TpRef: TpRef,
+		NodeRef:    NodeRef,
+		TpRef:      TpRef,
 	}
 
-  if lm, ok := t.SupportingTerminationPoint[key]; ok {
-    return lm
-  }
-  return nil
+	if lm, ok := t.SupportingTerminationPoint[key]; ok {
+		return lm
+	}
+	return nil
 }
 
 // DeleteSupportingTerminationPoint deletes the value with the specified keys from
@@ -1404,8 +1418,8 @@ func (t *IETFNetwork_Networks_Network_Node_TerminationPoint) GetSupportingTermin
 func (t *IETFNetwork_Networks_Network_Node_TerminationPoint) DeleteSupportingTerminationPoint(NetworkRef string, NodeRef string, TpRef string) {
 	key := IETFNetwork_Networks_Network_Node_TerminationPoint_SupportingTerminationPoint_Key{
 		NetworkRef: NetworkRef,
-		NodeRef: NodeRef,
-		TpRef: TpRef,
+		NodeRef:    NodeRef,
+		TpRef:      TpRef,
 	}
 
 	delete(t.SupportingTerminationPoint, key)
@@ -1416,8 +1430,7 @@ func (t *IETFNetwork_Networks_Network_Node_TerminationPoint) DeleteSupportingTer
 // the supplied IETFNetwork_Networks_Network_Node_TerminationPoint_SupportingTerminationPoint already exist in the list, an error is
 // returned.
 func (t *IETFNetwork_Networks_Network_Node_TerminationPoint) AppendSupportingTerminationPoint(v *IETFNetwork_Networks_Network_Node_TerminationPoint_SupportingTerminationPoint) error {
-	key := IETFNetwork_Networks_Network_Node_TerminationPoint_SupportingTerminationPoint_Key{NetworkRef: *v.NetworkRef,NodeRef: *v.NodeRef,TpRef: *v.TpRef,
-	}
+	key := IETFNetwork_Networks_Network_Node_TerminationPoint_SupportingTerminationPoint_Key{NetworkRef: *v.NetworkRef, NodeRef: *v.NodeRef, TpRef: *v.TpRef}
 
 	// Initialise the list within the receiver struct if it has not already been
 	// created.
@@ -1468,20 +1481,22 @@ func (t *IETFNetwork_Networks_Network_Node_TerminationPoint) Validate(opts ...yg
 
 // ΛEnumTypeMap returns a map, keyed by YANG schema path, of the enumerated types
 // that are included in the generated code.
-func (t *IETFNetwork_Networks_Network_Node_TerminationPoint) ΛEnumTypeMap() map[string][]reflect.Type { return ΛEnumTypes }
-
+func (t *IETFNetwork_Networks_Network_Node_TerminationPoint) ΛEnumTypeMap() map[string][]reflect.Type {
+	return ΛEnumTypes
+}
 
 // IETFNetwork_Networks_Network_Node_TerminationPoint_SupportingTerminationPoint represents the /ietf-network/networks/network/node/termination-point/supporting-termination-point YANG schema element.
 type IETFNetwork_Networks_Network_Node_TerminationPoint_SupportingTerminationPoint struct {
-	NetworkRef	*string	`path:"network-ref" module:"ietf-network-topology"`
-	NodeRef	*string	`path:"node-ref" module:"ietf-network-topology"`
-	TpRef	*string	`path:"tp-ref" module:"ietf-network-topology"`
+	NetworkRef *string `path:"network-ref" module:"ietf-network-topology"`
+	NodeRef    *string `path:"node-ref" module:"ietf-network-topology"`
+	TpRef      *string `path:"tp-ref" module:"ietf-network-topology"`
 }
 
 // IsYANGGoStruct ensures that IETFNetwork_Networks_Network_Node_TerminationPoint_SupportingTerminationPoint implements the yang.GoStruct
 // interface. This allows functions that need to handle this struct to
 // identify it as being generated by ygen.
-func (*IETFNetwork_Networks_Network_Node_TerminationPoint_SupportingTerminationPoint) IsYANGGoStruct() {}
+func (*IETFNetwork_Networks_Network_Node_TerminationPoint_SupportingTerminationPoint) IsYANGGoStruct() {
+}
 
 // GetNetworkRef retrieves the value of the leaf NetworkRef from the IETFNetwork_Networks_Network_Node_TerminationPoint_SupportingTerminationPoint
 // struct. Caution should be exercised whilst using this method since it will return
@@ -1541,8 +1556,8 @@ func (t *IETFNetwork_Networks_Network_Node_TerminationPoint_SupportingTerminatio
 
 	return map[string]interface{}{
 		"network-ref": *t.NetworkRef,
-		"node-ref": *t.NodeRef,
-		"tp-ref": *t.TpRef,
+		"node-ref":    *t.NodeRef,
+		"tp-ref":      *t.TpRef,
 	}, nil
 }
 
@@ -1556,12 +1571,13 @@ func (t *IETFNetwork_Networks_Network_Node_TerminationPoint_SupportingTerminatio
 
 // ΛEnumTypeMap returns a map, keyed by YANG schema path, of the enumerated types
 // that are included in the generated code.
-func (t *IETFNetwork_Networks_Network_Node_TerminationPoint_SupportingTerminationPoint) ΛEnumTypeMap() map[string][]reflect.Type { return ΛEnumTypes }
-
+func (t *IETFNetwork_Networks_Network_Node_TerminationPoint_SupportingTerminationPoint) ΛEnumTypeMap() map[string][]reflect.Type {
+	return ΛEnumTypes
+}
 
 // IETFNetwork_Networks_Network_SupportingNetwork represents the /ietf-network/networks/network/supporting-network YANG schema element.
 type IETFNetwork_Networks_Network_SupportingNetwork struct {
-	NetworkRef	*string	`path:"network-ref" module:"ietf-network"`
+	NetworkRef *string `path:"network-ref" module:"ietf-network"`
 }
 
 // IsYANGGoStruct ensures that IETFNetwork_Networks_Network_SupportingNetwork implements the yang.GoStruct
@@ -1604,12 +1620,13 @@ func (t *IETFNetwork_Networks_Network_SupportingNetwork) Validate(opts ...ygot.V
 
 // ΛEnumTypeMap returns a map, keyed by YANG schema path, of the enumerated types
 // that are included in the generated code.
-func (t *IETFNetwork_Networks_Network_SupportingNetwork) ΛEnumTypeMap() map[string][]reflect.Type { return ΛEnumTypes }
-
+func (t *IETFNetwork_Networks_Network_SupportingNetwork) ΛEnumTypeMap() map[string][]reflect.Type {
+	return ΛEnumTypes
+}
 
 // Topology represents the /topology YANG schema element.
 type Topology struct {
-	Networks	*IETFNetwork_Networks	`path:"networks" module:"ietf-network"`
+	Networks *IETFNetwork_Networks `path:"networks" module:"ietf-network"`
 }
 
 // IsYANGGoStruct ensures that Topology implements the yang.GoStruct
@@ -1648,8 +1665,6 @@ func (t *Topology) Validate(opts ...ygot.ValidationOption) error {
 // ΛEnumTypeMap returns a map, keyed by YANG schema path, of the enumerated types
 // that are included in the generated code.
 func (t *Topology) ΛEnumTypeMap() map[string][]reflect.Type { return ΛEnumTypes }
-
-
 
 var (
 	// ySchema is a byte slice contain a gzip compressed representation of the
@@ -1790,10 +1805,7 @@ var (
 	}
 )
 
-
 // ΛEnumTypes is a map, keyed by a YANG schema path, of the enumerated types that
 // correspond with the leaf. The type is represented as a reflect.Type. The naming
 // of the map ensures that there are no clashes with valid YANG identifiers.
-var ΛEnumTypes = map[string][]reflect.Type{
-}
-
+var ΛEnumTypes = map[string][]reflect.Type{}
