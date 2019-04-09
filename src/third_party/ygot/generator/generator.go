@@ -26,9 +26,9 @@ import (
 	"path/filepath"
 	"strings"
 
+	"github.com/adibrastegarnia/ygot/ygen"
 	log "github.com/golang/glog"
 	"github.com/openconfig/goyang/pkg/yang"
-	"github.com/openconfig/ygot/ygen"
 )
 
 const (
