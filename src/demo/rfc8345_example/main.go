@@ -5,8 +5,13 @@ import (
 	"fmt"
 	"io/ioutil"
 	"os"
+	"time"
 
-	"github.com/adibrastegarnia/ygot-scripts/src/pkg/topo"
+	"github.com/adibrastegarnia/ygot-scripts-with-leaf-setters/src/pkg/topo"
+	log "github.com/golang/glog"
+	"github.com/golang/protobuf/proto"
+	gnmipb "github.com/openconfig/gnmi/proto/gnmi"
+	"github.com/openconfig/ygot/ygot"
 )
 
 func readTopoFile() (string, interface{}, interface{}) {
@@ -76,14 +81,14 @@ func createTopo(networkID string, nodes interface{}, links interface{}) topo.IET
 			if key == "source-node" {
 				link := network.GetLink(linkID)
 				src := link.GetOrCreateSource()
-				src.SetSourceNode(value.(string))
+				src.SetSourceNode(value)
 
 			}
 
 			if key == "source-tp" {
 				link := network.GetLink(linkID)
 				src := link.GetOrCreateSource()
-				src.SetSourceTp(value.(string))
+				src.SetSourceTp(value)
 			}
 
 		}
@@ -93,14 +98,14 @@ func createTopo(networkID string, nodes interface{}, links interface{}) topo.IET
 			if key == "dest-node" {
 				link := network.GetLink(linkID)
 				dest := link.GetOrCreateDestination()
-				dest.SetDestNode(value.(string))
+				dest.SetDestNode(value)
 
 			}
 
 			if key == "dest-tp" {
 				link := network.GetLink(linkID)
 				dest := link.GetOrCreateDestination()
-				dest.SetDestTp(value.(string))
+				dest.SetDestTp(value)
 
 			}
 		}
@@ -108,6 +113,10 @@ func createTopo(networkID string, nodes interface{}, links interface{}) topo.IET
 	}
 
 	return networks
+}
+
+func renderToGNMINotifications(s ygot.GoStruct, ts int64, usePathElem bool) ([]*gnmipb.Notification, error) {
+	return ygot.TogNMINotifications(s, ts, ygot.GNMINotificationsConfig{UsePathElem: usePathElem})
 }
 
 func main() {
@@ -120,7 +129,18 @@ func main() {
 
 	var network = networks.GetOrCreateNetwork(networkID)
 
+	g, err := renderToGNMINotifications(network.GetNode("D2"), time.Now().Unix(), true)
+	if err != nil {
+		log.Exitf("Error creating notifications: %v", err)
+	}
+
+	if len(g) != 1 {
+		log.Exitf("Unexpected number of notifications returned %d", len(g))
+	}
+	data := proto.MarshalTextString(g[0])
+	fmt.Println(data)
+
 	// A sample test
-	fmt.Println(network.GetLink("D1,1-2-1,D2,2-1-1").GetLinkId())
+	//fmt.Println(network.GetLink("D1,1-2-1,D2,2-1-1").GetSource().GetSourceTp())
 
 }

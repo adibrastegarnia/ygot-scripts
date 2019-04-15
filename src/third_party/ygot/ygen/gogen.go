@@ -316,8 +316,8 @@ type generatedLeafSetter struct {
 	// Name is the name of the field. It is used as a suffix to Get to generate
 	// the getter.
 	Name string
-	// Type is the type of the field, returned by the generated method.
-	Type string
+	// Type is the type of the input field.
+	Type interface{}
 	// Zero is the value that should be returned if the field is set to nil.
 	Zero string
 	// Default is the default value specified in the YANG schema for the type
@@ -757,11 +757,12 @@ func (t *{{ .Receiver }}) Get{{ .Name }}() {{ .Type }} {
 	goLeafSetterTemplate = `
 // Set{{ .Name }} sets the value of the leaf {{ .Name }} from the {{ .Receiver }}
 // struct. 
-func (t *{{ .Receiver }}) Set{{ .Name }}(val string) {
-	if t == nil || val == "" {
+func (t *{{ .Receiver }}) Set{{ .Name }}(val interface{}) {
+	if t == nil || val == nil {
 		return
 	}
-	t.{{ .Name }} = ygot.String(val)
+	t.{{ .Name }} = ygot.ToPtr(val).(*{{ .Type }})
+
 }
 `
 

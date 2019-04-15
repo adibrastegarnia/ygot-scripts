@@ -555,11 +555,11 @@ func (t *IETFNetwork_Networks_Network) GetNetworkId() string {
 
 // SetNetworkId sets the value of the leaf NetworkId from the IETFNetwork_Networks_Network
 // struct. 
-func (t *IETFNetwork_Networks_Network) SetNetworkId(val string) {
-	if t == nil || val == "" {
+func (t *IETFNetwork_Networks_Network) SetNetworkId(val interface{}) {
+	if t == nil || val == nil {
 		return
 	}
-	t.NetworkId = ygot.String(val)
+	t.NetworkId = ygot.ToPtr(val).(*string)
 }
 
 // ΛListKeyMap returns the keys of the IETFNetwork_Networks_Network struct, which is a YANG list entry.
@@ -769,11 +769,11 @@ func (t *IETFNetwork_Networks_Network_Link) GetLinkId() string {
 
 // SetLinkId sets the value of the leaf LinkId from the IETFNetwork_Networks_Network_Link
 // struct. 
-func (t *IETFNetwork_Networks_Network_Link) SetLinkId(val string) {
-	if t == nil || val == "" {
+func (t *IETFNetwork_Networks_Network_Link) SetLinkId(val interface{}) {
+	if t == nil || val == nil {
 		return
 	}
-	t.LinkId = ygot.String(val)
+	t.LinkId = ygot.ToPtr(val).(*string)
 }
 
 // ΛListKeyMap returns the keys of the IETFNetwork_Networks_Network_Link struct, which is a YANG list entry.
@@ -841,20 +841,20 @@ func (t *IETFNetwork_Networks_Network_Link_Destination) GetDestTp() string {
 
 // SetDestNode sets the value of the leaf DestNode from the IETFNetwork_Networks_Network_Link_Destination
 // struct. 
-func (t *IETFNetwork_Networks_Network_Link_Destination) SetDestNode(val string) {
-	if t == nil || val == "" {
+func (t *IETFNetwork_Networks_Network_Link_Destination) SetDestNode(val interface{}) {
+	if t == nil || val == nil {
 		return
 	}
-	t.DestNode = ygot.String(val)
+	t.DestNode = ygot.ToPtr(val).(*string)
 }
 
 // SetDestTp sets the value of the leaf DestTp from the IETFNetwork_Networks_Network_Link_Destination
 // struct. 
-func (t *IETFNetwork_Networks_Network_Link_Destination) SetDestTp(val string) {
-	if t == nil || val == "" {
+func (t *IETFNetwork_Networks_Network_Link_Destination) SetDestTp(val interface{}) {
+	if t == nil || val == nil {
 		return
 	}
-	t.DestTp = ygot.String(val)
+	t.DestTp = ygot.ToPtr(val).(*string)
 }
 
 // Validate validates s against the YANG schema corresponding to its type.
@@ -911,20 +911,20 @@ func (t *IETFNetwork_Networks_Network_Link_Source) GetSourceTp() string {
 
 // SetSourceNode sets the value of the leaf SourceNode from the IETFNetwork_Networks_Network_Link_Source
 // struct. 
-func (t *IETFNetwork_Networks_Network_Link_Source) SetSourceNode(val string) {
-	if t == nil || val == "" {
+func (t *IETFNetwork_Networks_Network_Link_Source) SetSourceNode(val interface{}) {
+	if t == nil || val == nil {
 		return
 	}
-	t.SourceNode = ygot.String(val)
+	t.SourceNode = ygot.ToPtr(val).(*string)
 }
 
 // SetSourceTp sets the value of the leaf SourceTp from the IETFNetwork_Networks_Network_Link_Source
 // struct. 
-func (t *IETFNetwork_Networks_Network_Link_Source) SetSourceTp(val string) {
-	if t == nil || val == "" {
+func (t *IETFNetwork_Networks_Network_Link_Source) SetSourceTp(val interface{}) {
+	if t == nil || val == nil {
 		return
 	}
-	t.SourceTp = ygot.String(val)
+	t.SourceTp = ygot.ToPtr(val).(*string)
 }
 
 // Validate validates s against the YANG schema corresponding to its type.
@@ -981,20 +981,20 @@ func (t *IETFNetwork_Networks_Network_Link_SupportingLink) GetNetworkRef() strin
 
 // SetLinkRef sets the value of the leaf LinkRef from the IETFNetwork_Networks_Network_Link_SupportingLink
 // struct. 
-func (t *IETFNetwork_Networks_Network_Link_SupportingLink) SetLinkRef(val string) {
-	if t == nil || val == "" {
+func (t *IETFNetwork_Networks_Network_Link_SupportingLink) SetLinkRef(val interface{}) {
+	if t == nil || val == nil {
 		return
 	}
-	t.LinkRef = ygot.String(val)
+	t.LinkRef = ygot.ToPtr(val).(*string)
 }
 
 // SetNetworkRef sets the value of the leaf NetworkRef from the IETFNetwork_Networks_Network_Link_SupportingLink
 // struct. 
-func (t *IETFNetwork_Networks_Network_Link_SupportingLink) SetNetworkRef(val string) {
-	if t == nil || val == "" {
+func (t *IETFNetwork_Networks_Network_Link_SupportingLink) SetNetworkRef(val interface{}) {
+	if t == nil || val == nil {
 		return
 	}
-	t.NetworkRef = ygot.String(val)
+	t.NetworkRef = ygot.ToPtr(val).(*string)
 }
 
 // ΛListKeyMap returns the keys of the IETFNetwork_Networks_Network_Link_SupportingLink struct, which is a YANG list entry.
@@ -1284,11 +1284,11 @@ func (t *IETFNetwork_Networks_Network_Node) GetNodeId() string {
 
 // SetNodeId sets the value of the leaf NodeId from the IETFNetwork_Networks_Network_Node
 // struct. 
-func (t *IETFNetwork_Networks_Network_Node) SetNodeId(val string) {
-	if t == nil || val == "" {
+func (t *IETFNetwork_Networks_Network_Node) SetNodeId(val interface{}) {
+	if t == nil || val == nil {
 		return
 	}
-	t.NodeId = ygot.String(val)
+	t.NodeId = ygot.ToPtr(val).(*string)
 }
 
 // ΛListKeyMap returns the keys of the IETFNetwork_Networks_Network_Node struct, which is a YANG list entry.
@@ -1356,20 +1356,20 @@ func (t *IETFNetwork_Networks_Network_Node_SupportingNode) GetNodeRef() string {
 
 // SetNetworkRef sets the value of the leaf NetworkRef from the IETFNetwork_Networks_Network_Node_SupportingNode
 // struct. 
-func (t *IETFNetwork_Networks_Network_Node_SupportingNode) SetNetworkRef(val string) {
-	if t == nil || val == "" {
+func (t *IETFNetwork_Networks_Network_Node_SupportingNode) SetNetworkRef(val interface{}) {
+	if t == nil || val == nil {
 		return
 	}
-	t.NetworkRef = ygot.String(val)
+	t.NetworkRef = ygot.ToPtr(val).(*string)
 }
 
 // SetNodeRef sets the value of the leaf NodeRef from the IETFNetwork_Networks_Network_Node_SupportingNode
 // struct. 
-func (t *IETFNetwork_Networks_Network_Node_SupportingNode) SetNodeRef(val string) {
-	if t == nil || val == "" {
+func (t *IETFNetwork_Networks_Network_Node_SupportingNode) SetNodeRef(val interface{}) {
+	if t == nil || val == nil {
 		return
 	}
-	t.NodeRef = ygot.String(val)
+	t.NodeRef = ygot.ToPtr(val).(*string)
 }
 
 // ΛListKeyMap returns the keys of the IETFNetwork_Networks_Network_Node_SupportingNode struct, which is a YANG list entry.
@@ -1548,11 +1548,11 @@ func (t *IETFNetwork_Networks_Network_Node_TerminationPoint) GetTpId() string {
 
 // SetTpId sets the value of the leaf TpId from the IETFNetwork_Networks_Network_Node_TerminationPoint
 // struct. 
-func (t *IETFNetwork_Networks_Network_Node_TerminationPoint) SetTpId(val string) {
-	if t == nil || val == "" {
+func (t *IETFNetwork_Networks_Network_Node_TerminationPoint) SetTpId(val interface{}) {
+	if t == nil || val == nil {
 		return
 	}
-	t.TpId = ygot.String(val)
+	t.TpId = ygot.ToPtr(val).(*string)
 }
 
 // ΛListKeyMap returns the keys of the IETFNetwork_Networks_Network_Node_TerminationPoint struct, which is a YANG list entry.
@@ -1635,29 +1635,29 @@ func (t *IETFNetwork_Networks_Network_Node_TerminationPoint_SupportingTerminatio
 
 // SetNetworkRef sets the value of the leaf NetworkRef from the IETFNetwork_Networks_Network_Node_TerminationPoint_SupportingTerminationPoint
 // struct. 
-func (t *IETFNetwork_Networks_Network_Node_TerminationPoint_SupportingTerminationPoint) SetNetworkRef(val string) {
-	if t == nil || val == "" {
+func (t *IETFNetwork_Networks_Network_Node_TerminationPoint_SupportingTerminationPoint) SetNetworkRef(val interface{}) {
+	if t == nil || val == nil {
 		return
 	}
-	t.NetworkRef = ygot.String(val)
+	t.NetworkRef = ygot.ToPtr(val).(*string)
 }
 
 // SetNodeRef sets the value of the leaf NodeRef from the IETFNetwork_Networks_Network_Node_TerminationPoint_SupportingTerminationPoint
 // struct. 
-func (t *IETFNetwork_Networks_Network_Node_TerminationPoint_SupportingTerminationPoint) SetNodeRef(val string) {
-	if t == nil || val == "" {
+func (t *IETFNetwork_Networks_Network_Node_TerminationPoint_SupportingTerminationPoint) SetNodeRef(val interface{}) {
+	if t == nil || val == nil {
 		return
 	}
-	t.NodeRef = ygot.String(val)
+	t.NodeRef = ygot.ToPtr(val).(*string)
 }
 
 // SetTpRef sets the value of the leaf TpRef from the IETFNetwork_Networks_Network_Node_TerminationPoint_SupportingTerminationPoint
 // struct. 
-func (t *IETFNetwork_Networks_Network_Node_TerminationPoint_SupportingTerminationPoint) SetTpRef(val string) {
-	if t == nil || val == "" {
+func (t *IETFNetwork_Networks_Network_Node_TerminationPoint_SupportingTerminationPoint) SetTpRef(val interface{}) {
+	if t == nil || val == nil {
 		return
 	}
-	t.TpRef = ygot.String(val)
+	t.TpRef = ygot.ToPtr(val).(*string)
 }
 
 // ΛListKeyMap returns the keys of the IETFNetwork_Networks_Network_Node_TerminationPoint_SupportingTerminationPoint struct, which is a YANG list entry.
@@ -1720,11 +1720,11 @@ func (t *IETFNetwork_Networks_Network_SupportingNetwork) GetNetworkRef() string 
 
 // SetNetworkRef sets the value of the leaf NetworkRef from the IETFNetwork_Networks_Network_SupportingNetwork
 // struct. 
-func (t *IETFNetwork_Networks_Network_SupportingNetwork) SetNetworkRef(val string) {
-	if t == nil || val == "" {
+func (t *IETFNetwork_Networks_Network_SupportingNetwork) SetNetworkRef(val interface{}) {
+	if t == nil || val == nil {
 		return
 	}
-	t.NetworkRef = ygot.String(val)
+	t.NetworkRef = ygot.ToPtr(val).(*string)
 }
 
 // ΛListKeyMap returns the keys of the IETFNetwork_Networks_Network_SupportingNetwork struct, which is a YANG list entry.
